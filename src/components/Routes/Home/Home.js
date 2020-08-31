@@ -1,9 +1,13 @@
 import React from 'react';
 
+import PostList from '../../Posts/PostList';
+import FlashMessage from '../../helpers/Message/FlashMessage';
+
 const Home = () => {
   return (
     <div>
-      <h1 style={{textAlign: 'center', margin: 50}}>Hello world</h1>
+      <FlashMessage message='Create an account to communicate with other users.'/>
+      <PostList />
     </div>
   )
 }

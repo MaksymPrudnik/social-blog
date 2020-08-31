@@ -8,5 +8,7 @@
 .signin-box {
   min-width: 400px;
   height: 400px;
-  background-color: red;
+  background-color: #fff8;
+  border: 1.5px solid #aaa;
+  border-radius: 15px;
 }

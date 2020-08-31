@@ -1,0 +1,9 @@
+.postlist-container {
+  width: 70%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff2;
+}
