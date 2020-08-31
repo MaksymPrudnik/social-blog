@@ -1,14 +1,19 @@
 .register-section {
   width: 100%;
-  margin-top: 5rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
 }
 
 .register-box {
   min-width: 400px;
-  height: 400px;
-  background-color: #fff8;
+  background-color: #fff2;
   border: 1.5px solid #aaa;
   border-radius: 15px;
+  box-shadow: 4px 4px 4px #0003;
+}
+
+.register-button {
+  border-radius: 10px;
+  font-size: 1.2rem;
 }

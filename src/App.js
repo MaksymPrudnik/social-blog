@@ -10,6 +10,7 @@ import Home from './components/Routes/Home/Home';
 import SignIn from './components/Routes/Signin/SingIn';
 import Register from './components/Routes/Register/Register';
 
+import 'tachyons';
 import './App.css';
 
 const App = () => {
