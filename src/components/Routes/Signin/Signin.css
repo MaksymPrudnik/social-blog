@@ -1,0 +1,12 @@
+.signin-section {
+  width: 100%;
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.signin-box {
+  min-width: 400px;
+  height: 400px;
+  background-color: red;
+}
