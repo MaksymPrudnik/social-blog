@@ -25,6 +25,13 @@
   font-weight: 550;
   text-align: left;
 }
+.post-author a {
+  color: black;
+}
+.post-author a:hover {
+  text-decoration: underline;
+}
+
 .post-creation-date-time {
   grid-area: date-time;
   font-size: 0.9em;
@@ -38,14 +45,24 @@
 }
 /* Post body */
 .post-body {
-  width: 100%;
   text-align: justify;
+  padding: 0.5rem;
 }
 /* Post buttons */
 .post-buttons {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  padding-top: 0.2rem;
+  border-top: 0.5px solid #aaa;
 }
-
-
+.post-icon {
+  font-size: 1.4em;
+}
+.post-icon:hover {
+  cursor: pointer;
+}
+/* Post comments */
+.post-comments {
+  margin-top: 0.2rem;
+}

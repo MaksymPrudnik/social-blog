@@ -1,0 +1,31 @@
+.comment-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    'author date'
+    'body body';
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-top: 0.5px solid #aaa;
+}
+
+.comment-author {
+    grid-area: author;
+    display: inline-block;
+    justify-self: left;
+}
+.comment-author a {
+    color: black;
+    text-decoration: none;
+}
+.comment-author a:hover {
+    text-decoration: underline;
+}
+
+.comment-date {
+    grid-area: date;
+    font-size: 0.8em;
+}
+.comment-body {
+    grid-area: body;
+}

@@ -10,7 +10,7 @@ const Navigation = () => {
         <li className='list-link'><Link className='nav-link db' to='/'>Home</Link></li>
         <li className='spacer'></li>
         <li className='list-link'><Link className='nav-link db' to='/signin'>Sign In</Link></li>
-        <li className='list-link'><Link className='nav-link db' to='/register'>Sign Up</Link></li>
+        <li className='list-link'><Link className='nav-link db' to='/register'>Register</Link></li>
       </ul>
     </nav>
   )

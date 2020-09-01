@@ -9,6 +9,7 @@ import Navigation from './components/Navigation/Navigation';
 import Home from './components/Routes/Home/Home';
 import SignIn from './components/Routes/Signin/SingIn';
 import Register from './components/Routes/Register/Register';
+import User from './components/Routes/User/User';
 
 import 'tachyons';
 import './App.css';
@@ -28,6 +29,7 @@ const App = () => {
           <Route exact path='/register'>
             <Register />
           </Route>
+          <Route path='/user/:username' children={<User />}/>
         </Switch>
       </Router>
     </div>

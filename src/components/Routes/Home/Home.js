@@ -1,12 +1,12 @@
 import React from 'react';
 
 import PostList from '../../Posts/PostList';
-import FlashMessage from '../../helpers/Message/FlashMessage';
+import FlashMessage from '../../helpers/FlashMessage/FlashMessage';
 
 const Home = () => {
   return (
     <div>
-      <FlashMessage message='Create an account to communicate with other users.'/>
+      <FlashMessage message='Sign in to communicate with other users.' color='#f33e'/>
       <PostList />
     </div>
   )

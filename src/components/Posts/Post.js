@@ -1,22 +1,54 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { BiCommentAdd, BiCommentDetail } from 'react-icons/bi';
+
+import CommentList from './Comments/CommentList';
 
 import './Post.css';
 
-const Post = () => {
-  return (
-    <section className='post-section'>
-      <div className='post-description'>
-        <span className='post-author'>@MaksymPrudnik</span>
-        <span className='post-creation-date-time'>08-31-2020 17:14 PM</span>
-        <span className='post-header'>Some header</span>
-      </div>
-      <div className='post-body'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-      Ratione consectetur voluptatibus maiores doloremque cum commodi aperiam asperiores 
-      nobis culpa dolores sint, odit ipsum iure harum porro, similique dolore, animi quam?</div>
-      <div className='post-buttons'></div>
-      {/* <CommentList className='post-comments' /> */}
-    </section>
-  )
+class Post extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      showComments: false
+    }
+  }
+
+  showHideComments = () => {
+    this.setState(prev => ({
+      ...prev,
+      showComments: !this.state.showComments
+    }))
+  }
+
+  render() {
+    const username = 'maksymprudnik';
+    return (
+      <section className='post-section'>
+        <div className='post-description'>
+          <span className='post-author'>
+            <Link to={`/user/${username}`} className='link db grow'>
+              @{username}
+            </Link>
+          </span>
+          <span className='post-creation-date-time'>08-31-2020 17:14 PM</span>
+          <span className='post-header'>Some header</span>
+        </div>
+        <div className='post-body'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+        Ratione consectetur voluptatibus maiores doloremque cum commodi aperiam asperiores 
+        nobis culpa dolores sint, odit ipsum iure harum porro, similique dolore, animi quam?
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur doloribus
+        temporibus labore numquam cupiditate quae dignissimos exercitationem quod sed! Adipisci 
+        molestias tempore magni nemo perspiciatis rerum ex voluptatibus modi dolores.
+        </div>
+        <div className='post-buttons'>
+          <span className='grow post-icon' onClick={this.showHideComments}><BiCommentDetail /></span>
+          <span className='grow post-icon'><BiCommentAdd /></span>
+        </div>
+        { this.state.showComments && <div className='post-comments'><CommentList /></div> }
+      </section>
+    )
+  }
 }
 
 export default Post;
