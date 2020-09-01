@@ -15,8 +15,11 @@ import 'tachyons';
 import './App.css';
 
 const App = () => {
+  const loggedIn = true;
+  let rightPadding;
+  loggedIn ? rightPadding = 250 : rightPadding = 0;
   return (
-    <div className="App">
+    <div className="App" style={{paddingRight: rightPadding}}>
       <Router>
         <Navigation />
         <Switch>

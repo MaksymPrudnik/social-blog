@@ -5,34 +5,24 @@
     padding-top: 1rem;
     border-bottom: 1px solid #aaa;
     background-color: #fff4;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: 
-    'full-name posts .'
-    'avatar avatar avatar'
-    'names names date';
+    display: flex;
+    flex-direction: column;
 }
 
 .userinfo-full-name {
-    grid-area: full-name;
     align-self: center;
     height: 100%;
     font-size: 1.5rem;
     font-weight: 700;
 }
-.userinfo-posts-count {
-    grid-area: posts;
-}
 
 .userinfo-avatar {
-    grid-area: avatar;
     padding: 1rem 0;
     margin: 0.5rem 0;
     background-color: #fff6;
 }
 
 .userinfo-names {
-    grid-area: names;
     text-align: left;
     padding: 0.5rem 2rem;
     height: 100%;
@@ -43,6 +33,8 @@
 }
 
 .userinfo-date {
-    grid-area: date;
-    margin: auto 0; 
+    color: rgb(43, 41, 41);
+    font-weight: 300;
+    text-align: left;
+    padding: 0 2rem;
 }

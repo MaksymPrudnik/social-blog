@@ -1,7 +1,7 @@
 import React from 'react';
 import './UserInfo.css';
 
-import Avatar from './Avatar/Avatar';
+import Avatar from '../helpers/Avatar/Avatar';
 
 const UserInfo = ({ user }) => {
     const userObj = {
@@ -22,7 +22,7 @@ const UserInfo = ({ user }) => {
             </div>
             <span className='userinfo-posts-count'>{`${userObj.postCount} Posts`}</span>
             <div className='userinfo-avatar'>
-                <Avatar imageUrl={userObj.avatar}/>
+                <Avatar imageUrl={userObj.avatar} size='8rem'/>
             </div>
             <div className='userinfo-names'>
                 <span>{`${userObj.name.first} ${userObj.name.last}`}</span>

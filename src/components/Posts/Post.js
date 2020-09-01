@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BiCommentAdd, BiCommentDetail } from 'react-icons/bi';
 
 import CommentList from './Comments/CommentList';
+import AddCommentField from './Comments/AddCommentField';
 
 import './Post.css';
 
@@ -10,7 +11,8 @@ class Post extends React.Component {
   constructor() {
     super();
     this.state = {
-      showComments: false
+      showComments: false,
+      showAddCommentField: false
     }
   }
 
@@ -18,6 +20,13 @@ class Post extends React.Component {
     this.setState(prev => ({
       ...prev,
       showComments: !this.state.showComments
+    }))
+  }
+
+  showAddCommentField = () => {
+    this.setState(prev => ({
+      ...prev,
+      showAddCommentField: !this.state.showAddCommentField
     }))
   }
 
@@ -43,9 +52,10 @@ class Post extends React.Component {
         </div>
         <div className='post-buttons'>
           <span className='grow post-icon' onClick={this.showHideComments}><BiCommentDetail /></span>
-          <span className='grow post-icon'><BiCommentAdd /></span>
+          <span className='grow post-icon' onClick={this.showAddCommentField}><BiCommentAdd /></span>
         </div>
         { this.state.showComments && <div className='post-comments'><CommentList /></div> }
+        { this.state.showAddCommentField && <div className='post-add-comment'><AddCommentField /></div> }
       </section>
     )
   }
