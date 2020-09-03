@@ -14,7 +14,7 @@ import Loader from '../../helpers/Loader/Loader';
 const Register = () => {
   const dispatch = useDispatch();
   const { username, email, password } = useSelector(state => state.credentials);
-  const { isPending, jwt, error } = useSelector(state => state.authRegister);
+  const { isPending, jwt, error } = useSelector(state => state.auth);
   return (
     <section className='register-section'>
       <main className="pa4 black-80 signin-box">
@@ -66,7 +66,7 @@ const Register = () => {
           <div className='fail-message'>
             {
               isPending ? <Loader size='3rem'/>
-              : error ? error : jwt && <Redirect to='/'/>
+              : (error && error) || (jwt && <Redirect to='/'/>)
             }
           </div>
         </div>

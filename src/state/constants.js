@@ -1,4 +1,7 @@
+export const host = process.env.REACT_APP_HOST_URL || 'http://localhost:3000';
+
 // Authorization actions
+// credentials
 export const CHANGE_USERNAME = 'CHANGE_USERNAME';
 export const CHANGE_EMAIL = 'CHANGE_EMAIL';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
@@ -19,3 +22,10 @@ export const GET_USER_REQUEST_FAILED = 'GET_USER_REQUEST_FAILED';
 export const GET_POSTS_REQUEST_PENDING = 'GET_POSTS_REQUEST_PENDING';
 export const GET_POSTS_REQUEST_SUCCESS = 'GET_POSTS_REQUEST_SUCCESS';
 export const GET_POSTS_REQUEST_FAILED = 'GET_POSTS_REQUEST_FAILED';
+// Add post
+export const ADD_POST_REQUEST_PENDING = 'ADD_POST_REQUEST_PENDING';
+export const ADD_POST_REQUEST_SUCCESS = 'ADD_POST_REQUEST_SUCCESS';
+export const ADD_POST_REQUEST_FAILED = 'ADD_POST_REQUEST_FAILED';
+// Change input data
+export const CHANGE_HEADER = 'CHANGE_HEADER';
+export const CHANGE_BODY = 'CHANGE_BODY';

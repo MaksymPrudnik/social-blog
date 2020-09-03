@@ -1,14 +1,15 @@
 import { combineReducers } from 'redux';
 
-import { authLoginReducer, authRegisterReducer } from './authReducer';
+import { authReducer } from './authReducer';
 import { changeCredentialsReducer } from './credentialsReducer';
 import { getUserReducer } from './getUserReducer';
-import { getPostListReducer } from './getPostListReducer';
+import { postListReducer } from './postListReducer';
+import { changeInputReducer } from './changeInputReducer';
 
 export const rootReducer = combineReducers({
-    authLogin: authLoginReducer,
-    authRegister: authRegisterReducer,
+    auth: authReducer,
     credentials: changeCredentialsReducer,
     currentUser: getUserReducer,
-    posts: getPostListReducer
+    posts: postListReducer,
+    post_comment_input: changeInputReducer,
 })

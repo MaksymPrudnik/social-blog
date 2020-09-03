@@ -31,30 +31,26 @@ class Post extends React.Component {
   }
 
   render() {
-    const username = 'maksymprudnik';
+    const { post } = this.props;
+    console.log(post)
+    const normCreationTime = new Date(post.createdAt).toLocaleString();
     return (
       <section className='post-section'>
         <div className='post-description'>
           <span className='post-author'>
-            <Link to={`/user/${username}`} className='link db grow'>
-              @{username}
+            <Link to={`/user/${post.createdBy}`} className='link db grow'>
+              @{post.createdBy}
             </Link>
           </span>
-          <span className='post-creation-date-time'>08-31-2020 17:14 PM</span>
-          <span className='post-header'>Some header</span>
+          <span className='post-creation-date-time'>{normCreationTime}</span>
+          <span className='post-header'>{post.header}</span>
         </div>
-        <div className='post-body'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-        Ratione consectetur voluptatibus maiores doloremque cum commodi aperiam asperiores 
-        nobis culpa dolores sint, odit ipsum iure harum porro, similique dolore, animi quam?
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur doloribus
-        temporibus labore numquam cupiditate quae dignissimos exercitationem quod sed! Adipisci 
-        molestias tempore magni nemo perspiciatis rerum ex voluptatibus modi dolores.
-        </div>
+        <div className='post-body'> { post.body } </div>
         <div className='post-buttons'>
           <span className='grow post-icon' onClick={this.showHideComments}><BiCommentDetail /></span>
           <span className='grow post-icon' onClick={this.showAddCommentField}><BiCommentAdd /></span>
         </div>
-        { this.state.showComments && <div className='post-comments'><CommentList /></div> }
+        { this.state.showComments && <div className='post-comments'><CommentList comments={post.comments}/></div> }
         { this.state.showAddCommentField && <div className='post-add-comment'><AddCommentField /></div> }
       </section>
     )

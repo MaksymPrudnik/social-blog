@@ -20,9 +20,9 @@ import 'tachyons';
 import './App.css';
 
 const mapStateToProps = (state) => ({
-  logToken: state.authLogin.jwt,
-  regToken: state.authRegister.jwt,
-  isLoggedIn: state.currentUser.isLoggedIn
+  stateToken: state.auth.jwt,
+  isLoggedIn: state.currentUser.isLoggedIn,
+  error: state.currentUser.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -32,16 +32,34 @@ const mapDispatchToProps = (dispatch) => ({
 class App extends React.Component {
 
   componentDidMount() {
-    const { regToken, logToken, requestUser } = this.props;
+    const { stateToken, requestUser } = this.props;
+    console.log(stateToken);
     const token = window.localStorage.getItem('token');
     if (token) {
       const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-      requestUser(username);  
-    } else if (regToken || logToken) {
-      const token = regToken || logToken;
+      requestUser(username);
+    } else if (stateToken) {
+      const token = stateToken;
       window.localStorage.setItem('token', token);
       const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
       requestUser(username);
+    }
+  }
+
+  componentDidUpdate() {
+    const { error, stateToken, requestUser, isLoggedIn } = this.props;
+    const token = window.localStorage.getItem('token');
+    if (token && !isLoggedIn) {
+      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+      requestUser(username);
+    } else if (stateToken && !isLoggedIn) {
+      const token = stateToken;
+      window.localStorage.setItem('token', token);
+      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+      requestUser(username);
+    }
+    if (error === 'Unable to get user') {
+      window.localStorage.removeItem('token');
     }
   }
 

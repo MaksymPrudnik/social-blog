@@ -13,7 +13,7 @@ import Loader from '../../helpers/Loader/Loader';
 const SignIn = () => {
   const dispatch = useDispatch();
   const { email, password } = useSelector(state => state.credentials);
-  const { isPending, error, jwt } = useSelector(state => state.authLogin);
+  const { isPending, error, jwt } = useSelector(state => state.auth);
   return (
     <section className='signin-section'>
       <main className="pa4 black-80 signin-box">
@@ -53,7 +53,7 @@ const SignIn = () => {
           <div className='fail-message'>
             {
               isPending ? <Loader size='3rem'/>
-              : error ? error : (jwt && <Redirect to='/' />)
+              : (error && error) || (jwt && <Redirect to='/'/>)
             }
           </div>
         </div>
