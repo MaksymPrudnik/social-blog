@@ -4,12 +4,13 @@ import {
     LOGIN_REQUEST_FAILED,
     REGISTER_REQUEST_PENDING,
     REGISTER_REQUEST_SUCCESS,
-    REGISTER_REQUEST_FAILED
+    REGISTER_REQUEST_FAILED,
+    host
 } from '../constants';
 
 export const requestLoginAction = (dispatch, email, password) => {
     dispatch({ type: LOGIN_REQUEST_PENDING });
-    fetch('http://localhost:3000/signin', {
+    fetch(`${host}/signin`, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -36,7 +37,7 @@ export const requestLoginAction = (dispatch, email, password) => {
 
 export const requestRegisterAction = (dispatch, username, email, password) => {
     dispatch({ type: REGISTER_REQUEST_PENDING });
-    fetch('http://localhost:3000/register', {
+    fetch(`${host}/register`, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
