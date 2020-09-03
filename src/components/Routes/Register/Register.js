@@ -1,9 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { 
+  setUsernameAction,
+  setEmailAction, 
+  setPasswordAction 
+} from '../../../state/actions/credentialsActions';
+import { requestRegisterAction } from '../../../state/actions/authActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Register.css';
+import Loader from '../../helpers/Loader/Loader';
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const { username, email, password } = useSelector(state => state.credentials);
+  const { isPending, jwt, error } = useSelector(state => state.authRegister);
   return (
     <section className='register-section'>
       <main className="pa4 black-80 signin-box">
@@ -17,7 +28,7 @@ const Register = () => {
                 type="text" 
                 name="username"  
                 id="username" 
-                required
+                onChange={(event) => dispatch(setUsernameAction(event.target.value))}
                 />
             </div>
             <div className="mt3">
@@ -27,7 +38,7 @@ const Register = () => {
                 type="email" 
                 name="email-address"  
                 id="email-address" 
-                required
+                onChange={(event) => dispatch(setEmailAction(event.target.value))}
                 />
             </div>
             <div className="mv3">
@@ -37,7 +48,7 @@ const Register = () => {
                 type="password" 
                 name="password"  
                 id="password" 
-                required
+                onChange={(event) => dispatch(setPasswordAction(event.target.value))}
                 />
             </div>
           </fieldset>
@@ -46,18 +57,17 @@ const Register = () => {
               className="register-button b ph3 pv2 input-reset ba b--black bg-transparent grow pointer dib" 
               type="submit" 
               value="Register" 
+              onClick={() => requestRegisterAction(dispatch, username, email, password)}
             />
           </div>
           <div className="lh-copy mt3">
             <Link to='/signin' className="f6 link dim black db pointer">Sign In</Link>
           </div>
-          <div className='fail_message fw6' style={{
-            backgroundColor: "#af111166",
-            fontSize: '1.2rem',
-            color: '#000',
-            lineHeight: '40px'
-            }}>
-            <p></p>
+          <div className='fail-message'>
+            {
+              isPending ? <Loader size='3rem'/>
+              : error ? error : jwt && <Redirect to='/'/>
+            }
           </div>
         </div>
       </main>

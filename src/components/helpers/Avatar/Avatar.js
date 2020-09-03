@@ -2,10 +2,10 @@ import React from 'react';
 
 const Avatar = ({ imageUrl, size }) => {
     return (
-        <div class="tc">
+        <div className="tc">
         <img
             src={imageUrl || "http://tachyons.io/img/logo.jpg"}
-            class="br4 dib" alt="avatar"
+            className="br4 dib" alt="avatar"
             style={{
                 objectFit: 'cover',
                 height: size,

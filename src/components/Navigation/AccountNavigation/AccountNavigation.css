@@ -1,9 +1,9 @@
 .account-nav-section {
     position: fixed;
     right: 0;
-    top: 10vh;
+    top: 0;
     max-width: 400px;
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #fffb;

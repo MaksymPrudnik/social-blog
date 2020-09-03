@@ -4,12 +4,10 @@ import Post from './Post';
 
 import './PostList.css';
 
-const PostList = () => {
+const PostList = ({ posts, isPending}) => {
   return (
     <div className='postlist-container'>
-      <Post />
-      <Post />
-      <Post />
+      { posts.length ? posts.map((post, i) => <Post key={i} post={post}/>) : !isPending && <h2>There are no posts yet!</h2>}
     </div>
   )
 }

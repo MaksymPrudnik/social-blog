@@ -10,6 +10,7 @@ import { BiDownArrow } from 'react-icons/bi';
 import './AccountNavigation.css';
 
 const AccountNavigation = () => {
+    const currentUser = 'maksymprudnik';
     return (
         <section className='account-nav-section'>
             <div className='dropdown'>
@@ -22,14 +23,14 @@ const AccountNavigation = () => {
                     <div className='account-nav-profile-arrow'><BiDownArrow/></div>
                 </div>
                 <div className='dropdown-content'>
-                    <Link>Log out</Link>
+                    <Link to='/'>Log out</Link>
                 </div>
             </div>
             <ul className='account-nav-link-list'>
-                <li className='account-nav-link'><Link><GoHome/> Home</Link></li>
-                <li className='account-nav-link'><Link><RiAccountBoxLine/> Account</Link></li>
-                <li className='account-nav-link'><Link><GrArticle/> Posts</Link></li>
-                <li className='account-nav-link'><Link><FiUsers/> Friends</Link></li>
+                <li className='account-nav-link'><Link to='/'><GoHome/> Home</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${currentUser}`}><RiAccountBoxLine/> Account</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${currentUser}/posts`}><GrArticle/> Posts</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${currentUser}/friends`}><FiUsers/> Friends</Link></li>
             </ul>
         </section>
     )

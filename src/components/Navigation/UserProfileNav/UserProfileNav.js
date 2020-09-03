@@ -6,11 +6,11 @@ import { GrArticle } from 'react-icons/gr';
 
 import './UserProfileNav.css';
 
-const UserProfileNav = () => {
+const UserProfileNav = ({url}) => {
     return (
         <div className='user-profile-nav-section'>
-            <Link><GrArticle /> Posts</Link>
-            <Link><FiUsers /> Friends</Link>
+            <Link to={`${url}/posts`}><GrArticle /> Posts</Link>
+            <Link to={`${url}/friends`}><FiUsers /> Friends</Link>
         </div>
     )
 }

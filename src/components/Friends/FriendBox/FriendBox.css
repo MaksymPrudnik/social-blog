@@ -1,0 +1,52 @@
+.friend-box-section {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 0.5px solid #aaa;
+}
+
+.friend-box-actions {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.friend-box-username {
+    padding-inline-start: 1rem;
+    text-align: left;
+}
+
+.friend-box-buttons {
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+
+.friend-box-buttons button {
+    margin: 0 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.friend-box-buttons button:hover {
+    background-color: transparent;
+    cursor: pointer;
+}
+.friend-box-buttons button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #aaa;
+}
+
+.friend-box-view-button {
+    background-color: #30c7f0;
+    border: 2px solid #30c7f0;
+}
+.friend-box-accept-button {
+    background-color: #30c7f0;
+    border: 2px solid #30c7f0;
+}
+.friend-box-remove-button {
+    background-color: #ff6542;
+    border: 2px solid #ff6542;
+}

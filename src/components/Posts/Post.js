@@ -8,8 +8,8 @@ import AddCommentField from './Comments/AddCommentField';
 import './Post.css';
 
 class Post extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showComments: false,
       showAddCommentField: false

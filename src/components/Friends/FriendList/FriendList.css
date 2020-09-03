@@ -1,0 +1,9 @@
+.friend-list-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid #aaa;
+    border-top: none;
+    background-color: #fff3;
+}

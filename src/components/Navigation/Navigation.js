@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import AccountNavigation from './AccountNavigation/AccountNavigation';
 
 import './Navigation.css';
 
 const Navigation = () => {
-  return (
-    <div>
+  let isLoggedIn = useSelector(state => state.currentUser.isLoggedIn);
+  return isLoggedIn ? <AccountNavigation /> 
+  : (<div>
       <nav className='nav-container'>
         <ul className='link-list'>
           <li className='list-link'><Link className='nav-link db' to='/'>Home</Link></li>
@@ -16,9 +18,7 @@ const Navigation = () => {
           <li className='list-link'><Link className='nav-link db' to='/register'>Register</Link></li>
         </ul>
       </nav>
-      <AccountNavigation />
-    </div>
-  )
+    </div>)
 }
 
 export default Navigation;

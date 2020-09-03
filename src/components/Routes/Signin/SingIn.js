@@ -1,9 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { 
+  setEmailAction, 
+  setPasswordAction 
+} from '../../../state/actions/credentialsActions';
+import { requestLoginAction } from '../../../state/actions/authActions';
 
 import './Signin.css';
+import Loader from '../../helpers/Loader/Loader';
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const { email, password } = useSelector(state => state.credentials);
+  const { isPending, error, jwt } = useSelector(state => state.authLogin);
   return (
     <section className='signin-section'>
       <main className="pa4 black-80 signin-box">
@@ -17,7 +27,7 @@ const SignIn = () => {
                 type="email" 
                 name="email-address"  
                 id="email-address" 
-                required
+                onChange={(event) => dispatch(setEmailAction(event.target.value))}
                 />
             </div>
             <div className="mv3">
@@ -27,27 +37,24 @@ const SignIn = () => {
                 type="password" 
                 name="password"  
                 id="password" 
-                required
+                onChange={(event) => dispatch(setPasswordAction(event.target.value))}
                 />
             </div>
           </fieldset>
           <div>
-            <input 
+            <button 
               className="signin-button b ph3 pv2 input-reset ba b--black bg-transparent grow pointer dib" 
-              type="submit" 
-              value="Sign in" 
-            />
+              onClick={() => requestLoginAction(dispatch, email, password)}
+            >Sign in </button>
           </div>
           <div className="lh-copy mt3">
             <Link to='/register' className="f6 link dim black db pointer">Register</Link>
           </div>
-          <div className='fail_message fw6' style={{
-            backgroundColor: "#af111166",
-            fontSize: '1.2rem',
-            color: '#000',
-            lineHeight: '40px'
-            }}>
-            <p></p>
+          <div className='fail-message'>
+            {
+              isPending ? <Loader size='3rem'/>
+              : error ? error : (jwt && <Redirect to='/' />)
+            }
           </div>
         </div>
       </main>
