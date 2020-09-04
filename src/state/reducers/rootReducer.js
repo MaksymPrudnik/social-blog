@@ -6,6 +6,7 @@ import { getUserReducer } from './getUserReducer';
 import { postListReducer } from './postListReducer';
 import { changeInputReducer } from './changeInputReducer';
 import { getProfileReducer } from './getProfileReducer';
+import { friendsReducer } from './friendsReducer';
 
 export const rootReducer = combineReducers({
     auth: authReducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
     user: getProfileReducer,
     posts: postListReducer,
     post_comment_input: changeInputReducer,
+    friend: friendsReducer
 })

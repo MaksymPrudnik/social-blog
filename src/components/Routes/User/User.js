@@ -45,7 +45,7 @@ const User = () => {
                         <PostList posts={profile.posts}/>
                     </Route>
                     <Route path={`${path}/friends`}>
-                        <Friends friends={profile.friends} displayAll={isProfileMatchUser}/>
+                        <Friends friends={profile.friends} isMatch={isProfileMatchUser}/>
                     </Route>
                 </Switch>
             </div>
