@@ -10,25 +10,45 @@ import AddPostField from '../../Posts/AddPostField/AddPostField';
 // Friends
 import Friends from '../../Friends/Friends';
 
+import Loader from '../../helpers/Loader/Loader';
+
+import { getProfileAction } from '../../../state/actions/getProfileAction';
+
 import { useParams, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const User = () => {
+    const dispatch = useDispatch();
     const { username } = useParams();
     const { path, url } = useRouteMatch();
-    const currentUser = 'maksymprudnik';
+    const { profile, isPending } = useSelector(state => state.user);
+    // load profile if 
+    // currently not loading already
+    // we don't have profile
+    // or if we have old one, that doesn't match url
+    if ( !isPending && (!profile || profile.username !== username)) {
+        getProfileAction(dispatch, username);
+    }
+    const currentUser = useSelector(state => state.currentUser.currentUser);
     return (
         <main className='user-main'>
-            <UserInfo user={username}/>
-            <UserProfileNav url={url}/>
-            <Switch>
-                <Route path={`${path}/posts`}>
-                    { username===currentUser && <AddPostField />}
-                    <PostList />
-                </Route>
-                <Route path={`${path}/friends`}>
-                    <Friends />
-                </Route>
-            </Switch>
+            {
+            isPending ? <Loader size='5rem' /> 
+            : <div>
+                <UserInfo user={profile}/>
+                <UserProfileNav url={url}/>
+                <Switch>
+                    <Route path={`${path}/posts`}>
+                        { profile.username===currentUser.username && <AddPostField />}
+                        <PostList posts={profile.posts}/>
+                    </Route>
+                    <Route path={`${path}/friends`}>
+                        <Friends friends={profile.friends}/>
+                    </Route>
+                </Switch>
+            </div>
+            }
         </main>
     )
 }

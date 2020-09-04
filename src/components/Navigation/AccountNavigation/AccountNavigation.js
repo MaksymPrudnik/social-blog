@@ -8,29 +8,37 @@ import Avatar from '../../helpers/Avatar/Avatar';
 import { BiDownArrow } from 'react-icons/bi';
 
 import './AccountNavigation.css';
+import { requestSignoutAction } from '../../../state/actions/authActions';
+import { useDispatch } from 'react-redux';
 
-const AccountNavigation = () => {
-    const currentUser = 'maksymprudnik';
+const AccountNavigation = ({ user }) => {
+    const dispatch = useDispatch();
+    const token = window.localStorage.getItem('token');
     return (
         <section className='account-nav-section'>
             <div className='dropdown'>
                 <div className='account-nav-profile'>
                     <Avatar size='3rem'/>
                     <div className='account-nav-profile-names'>
-                        <div className='account-nav-profile-full-name'>Maksym Prudnik</div>
-                        <div className='account-nav-profile-username'>@maksymprudnik</div>
+                        <div className='account-nav-profile-full-name'>
+                            { user.name && `${user.name.first} ${user.name.last}`}
+                        </div>
+                        <div className='account-nav-profile-username'>@{user.username}</div>
                     </div>
                     <div className='account-nav-profile-arrow'><BiDownArrow/></div>
                 </div>
                 <div className='dropdown-content'>
-                    <Link to='/'>Log out</Link>
+                    <Link 
+                        to='/'
+                        onClick={() => requestSignoutAction(dispatch, token)}
+                    >Log out</Link>
                 </div>
             </div>
             <ul className='account-nav-link-list'>
                 <li className='account-nav-link'><Link to='/'><GoHome/> Home</Link></li>
-                <li className='account-nav-link'><Link to={`/user/${currentUser}`}><RiAccountBoxLine/> Account</Link></li>
-                <li className='account-nav-link'><Link to={`/user/${currentUser}/posts`}><GrArticle/> Posts</Link></li>
-                <li className='account-nav-link'><Link to={`/user/${currentUser}/friends`}><FiUsers/> Friends</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${user.username}`}><RiAccountBoxLine/> Account</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${user.username}/posts`}><GrArticle/> Posts</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${user.username}/friends`}><FiUsers/> Friends</Link></li>
             </ul>
         </section>
     )

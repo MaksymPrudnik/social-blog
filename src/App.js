@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import jwt from 'jsonwebtoken';
 
 import { getUserAction } from './state/actions/getUserAction';
+import { loginWithTokenAction } from './state/actions/authActions';
 
 import Navigation from './components/Navigation/Navigation';
 // Routes
@@ -21,45 +22,63 @@ import './App.css';
 
 const mapStateToProps = (state) => ({
   stateToken: state.auth.jwt,
-  isLoggedIn: state.currentUser.isLoggedIn,
+  isLoggedIn: state.auth.isLoggedIn,
+  usedLogout: state.auth.usedLogout,
+  currentUser: state.currentUser.currentUser,
   error: state.currentUser.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestUser: (username) => getUserAction(dispatch, username)
+  requestUser: (username) => getUserAction(dispatch, username),
+  updateAuth: (token) => dispatch(loginWithTokenAction(token))
 })
 
 class App extends React.Component {
 
   componentDidMount() {
-    const { stateToken, requestUser } = this.props;
-    console.log(stateToken);
+    const { stateToken, isLoggedIn, usedLogout, currentUser, requestUser, updateAuth } = this.props;
     const token = window.localStorage.getItem('token');
-    if (token) {
-      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-      requestUser(username);
-    } else if (stateToken) {
-      const token = stateToken;
-      window.localStorage.setItem('token', token);
-      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-      requestUser(username);
+    if (!currentUser && !usedLogout) {
+      if (token) {
+        const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+        requestUser(username);
+      } else if (stateToken && isLoggedIn) {
+        const token = stateToken;
+        window.localStorage.setItem('token', token);
+        const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+        requestUser(username);
+      }
+    }
+    if (token && usedLogout) {
+      window.localStorage.removeItem('token')
+    }
+    if(currentUser && token && !usedLogout && !isLoggedIn) {
+      updateAuth(token);
     }
   }
 
   componentDidUpdate() {
-    const { error, stateToken, requestUser, isLoggedIn } = this.props;
+    const { stateToken, isLoggedIn, usedLogout, currentUser, error, requestUser, updateAuth } = this.props;
     const token = window.localStorage.getItem('token');
-    if (token && !isLoggedIn) {
-      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-      requestUser(username);
-    } else if (stateToken && !isLoggedIn) {
-      const token = stateToken;
-      window.localStorage.setItem('token', token);
-      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-      requestUser(username);
+    if (!currentUser && !usedLogout) {
+      if (token) {
+        const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+        requestUser(username);
+      } else if (stateToken && isLoggedIn) {
+        const token = stateToken;
+        window.localStorage.setItem('token', token);
+        const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+        requestUser(username);
+      }
+    }
+    if (token && usedLogout) {
+      window.localStorage.removeItem('token')
     }
     if (error === 'Unable to get user') {
       window.localStorage.removeItem('token');
+    }
+    if(currentUser && token && !usedLogout && !isLoggedIn) {
+      updateAuth(token);
     }
   }
 

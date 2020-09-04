@@ -5,11 +5,9 @@ import './AddPostField.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeHeaderAction, changeBodyAction } from '../../../state/actions/changeInputAction';
 import { addNewPostAction } from '../../../state/actions/addNewPostAction';
-import Loader from '../../helpers/Loader/Loader';
 
 const AddPostField = () => {
     const dispatch = useDispatch();
-    const { isPending } = useSelector(state => state.posts);
     const { header, body } = useSelector(state => state.post_comment_input);
     const token = window.localStorage.getItem('token');
     const { username } = useSelector(state => state.currentUser.currentUser)
@@ -38,7 +36,6 @@ const AddPostField = () => {
                     <RiSendPlaneLine/>
                 </button>
             </div>
-            { isPending && <Loader size='3rem' />}
         </section>
     )
 }

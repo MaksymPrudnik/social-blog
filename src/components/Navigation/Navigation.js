@@ -7,8 +7,9 @@ import AccountNavigation from './AccountNavigation/AccountNavigation';
 import './Navigation.css';
 
 const Navigation = () => {
-  let isLoggedIn = useSelector(state => state.currentUser.isLoggedIn);
-  return isLoggedIn ? <AccountNavigation /> 
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const { currentUser } = useSelector(state => state.currentUser);
+  return isLoggedIn ? <AccountNavigation user={currentUser}/> 
   : (<div>
       <nav className='nav-container'>
         <ul className='link-list'>

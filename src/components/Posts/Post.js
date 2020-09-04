@@ -32,7 +32,6 @@ class Post extends React.Component {
 
   render() {
     const { post } = this.props;
-    console.log(post)
     const normCreationTime = new Date(post.createdAt).toLocaleString();
     return (
       <section className='post-section'>
