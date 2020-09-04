@@ -9,7 +9,6 @@ export const getProfileAction = (dispatch, username) => {
     dispatch({ type: GET_PROFILE_REQUEST_PENDING});
     fetch(`${host}/user/${username}`)
     .then(response => {
-        console.log(response);
         if (response.status === 400 || !response.ok) {
             return Promise.reject('Unable to get profile');
         }
