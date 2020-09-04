@@ -8,7 +8,7 @@ import { getPostListAction } from '../../../state/actions/getPostListAction';
 import Loader from '../../helpers/Loader/Loader';
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.currentUser.isLoggedIn,
+  isLoggedIn: state.auth.isLoggedIn,
   isPending: state.posts.isPending,
   posts: state.posts.posts,
 })

@@ -31,20 +31,21 @@ const User = () => {
         getProfileAction(dispatch, username);
     }
     const currentUser = useSelector(state => state.currentUser.currentUser);
+    const isProfileMatchUser = profile.username===currentUser.username;
     return (
         <main className='user-main'>
-            {
+            { 
             isPending ? <Loader size='5rem' /> 
             : <div>
                 <UserInfo user={profile}/>
                 <UserProfileNav url={url}/>
                 <Switch>
                     <Route path={`${path}/posts`}>
-                        { profile.username===currentUser.username && <AddPostField />}
+                        { isProfileMatchUser && <AddPostField />}
                         <PostList posts={profile.posts}/>
                     </Route>
                     <Route path={`${path}/friends`}>
-                        <Friends friends={profile.friends}/>
+                        <Friends friends={profile.friends} displayAll={isProfileMatchUser}/>
                     </Route>
                 </Switch>
             </div>

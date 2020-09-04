@@ -35,24 +35,32 @@ const mapDispatchToProps = (dispatch) => ({
 
 class App extends React.Component {
 
+  // We can have 4 possible cases to hit '/' (home):
+  // 1)new visitor - state == initialState, token is empty
+  // 2)redirect from login/register - auth filled (usedLogout == false), current user empty, token isn't in localStorage
+  // 3)redirect after logout - auth filled (usedLogout == true), current user filled, token in storage
+  // 4)page reload || come back - state == initialState, token in localStorage
+  // 5)manualy navigate to '/' - auth filled (usedLogout == false), current user filled, token in storage
+  // mark trace with numbers
+
   componentDidMount() {
     const { stateToken, isLoggedIn, usedLogout, currentUser, requestUser, updateAuth } = this.props;
     const token = window.localStorage.getItem('token');
-    if (!currentUser && !usedLogout) {
-      if (token) {
+    if (!currentUser && !usedLogout) { // 1 && 2 && 4
+      if (token) { // 4
         const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
         requestUser(username);
-      } else if (stateToken && isLoggedIn) {
+      } else if (stateToken && isLoggedIn) { // 2
         const token = stateToken;
         window.localStorage.setItem('token', token);
         const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
         requestUser(username);
       }
     }
-    if (token && usedLogout) {
+    if (token && usedLogout) { // 3
       window.localStorage.removeItem('token')
     }
-    if(currentUser && token && !usedLogout && !isLoggedIn) {
+    if(currentUser && token && !usedLogout && !isLoggedIn) { // 4 after loading currentUser
       updateAuth(token);
     }
   }
@@ -74,7 +82,7 @@ class App extends React.Component {
     if (token && usedLogout) {
       window.localStorage.removeItem('token')
     }
-    if (error === 'Unable to get user') {
+    if (error === 'Unable to get user') { // if wrong token
       window.localStorage.removeItem('token');
     }
     if(currentUser && token && !usedLogout && !isLoggedIn) {
