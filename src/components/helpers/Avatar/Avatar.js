@@ -4,7 +4,7 @@ const Avatar = ({ imageUrl, size }) => {
     return (
         <div className="tc">
         <img
-            src={imageUrl || "http://tachyons.io/img/logo.jpg"}
+            src={imageUrl || "https://i.ytimg.com/vi/p5Vsg1CrhrI/hqdefault.jpg"}
             className="br4 dib" alt="avatar"
             style={{
                 objectFit: 'cover',

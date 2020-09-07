@@ -22,12 +22,12 @@ const User = () => {
     const dispatch = useDispatch();
     const { username } = useParams();
     const { path, url } = useRouteMatch();
-    const { profile, isPending } = useSelector(state => state.user);
+    const { profile, isPending, error } = useSelector(state => state.user);
     // load profile if 
     // currently not loading already
     // we don't have profile
     // or if we have old one, that doesn't match url
-    if ( !isPending && (!profile || profile.username !== username)) {
+    if ( !isPending && !error && (!profile || profile.username !== username)) {
         getProfileAction(dispatch, username);
     }
     const currentUser = useSelector(state => state.currentUser.currentUser);
@@ -36,8 +36,9 @@ const User = () => {
         <main className='user-main'>
             { 
             isPending ? <Loader size='5rem' /> 
+            : error ? <h1>{error}</h1>
             : <div>
-                <UserInfo user={profile}/>
+                <UserInfo user={profile} match={isProfileMatchUser}/>   
                 <UserProfileNav url={url}/>
                 <Switch>
                     <Route path={`${path}/posts`}>

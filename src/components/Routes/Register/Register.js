@@ -66,7 +66,7 @@ const Register = () => {
           <div className='fail-message'>
             {
               isPending ? <Loader size='3rem'/>
-              : (error && error) || (jwt && <Redirect to='/'/>)
+              : (jwt && <Redirect to='/'/>) || (error && error)
             }
           </div>
         </div>

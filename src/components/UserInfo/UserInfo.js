@@ -4,10 +4,12 @@ import './UserInfo.css';
 import Avatar from '../helpers/Avatar/Avatar';
 import Loader from '../helpers/Loader/Loader';
 import { useSelector } from 'react-redux';
+import AddFriendButton from '../helpers/AddFriendButton/AddFriendButton';
 
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user, match }) => {
     const normalDate = new Date(user.createdAt).toLocaleDateString();
     const { isPending } = useSelector(state => state.user);
+    const { isLoggedIn } = useSelector(state => state.auth);
     return (
         <header className='userinfo-section'>
             { 
@@ -20,6 +22,7 @@ const UserInfo = ({ user }) => {
                     <div className='userinfo-avatar'>
                         <Avatar imageUrl={user.avatar} size='8rem'/>
                     </div>
+                    { !match && isLoggedIn && <AddFriendButton username={user.username}/>}
                     <div className='userinfo-names'>
                         <span>{ user.name && `${user.name.first} ${user.name.last}`}</span>
                         <span>@{user.username}</span>

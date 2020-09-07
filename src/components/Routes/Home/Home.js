@@ -32,8 +32,8 @@ class Home extends React.Component {
           isLoggedIn ? <AddPostField /> 
           : <FlashMessage message='Sign in to communicate with other users.' color='#f33e'/> 
         }
-        { error ? <h2>{error}</h2> : <PostList posts={posts} isPending={isPending}/>}
         { isPending && <Loader size='4rem' />}
+        { error ? <h2>{error}</h2> : <PostList posts={posts} isPending={isPending}/>}
       </div>
     )
   }
