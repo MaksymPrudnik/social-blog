@@ -15,7 +15,7 @@ const AddCommentField = ({ postOwner, postId }) => {
     const token = window.localStorage.getItem('token');
     const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
     return (
-        <div className='add-comment-section'>
+        <div>
             {
                 isPending ? <Loader size='3rem'/>
                 : <div className='add-comment-section' style={{width: '100%'}}>

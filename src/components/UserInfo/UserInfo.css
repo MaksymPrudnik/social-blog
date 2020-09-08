@@ -5,8 +5,13 @@
     padding: 1rem 0;
     border-bottom: 1px solid #aaa;
     background-color: #fff4;
-    display: flex;
-    flex-direction: column;
+}
+.signout-button {
+    text-align: right;
+    margin: 0 1rem;
+}
+.signout-button a {
+    color: black;
 }
 
 .userinfo-full-name {

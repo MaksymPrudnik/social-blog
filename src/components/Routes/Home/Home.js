@@ -6,15 +6,18 @@ import AddPostField from '../../Posts/AddPostField/AddPostField';
 import { connect } from 'react-redux';
 import { getPostListAction } from '../../../state/actions/getPostListAction';
 import Loader from '../../helpers/Loader/Loader';
+import { clearProfileAction } from '../../../state/actions/clearProfileAction';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   isPending: state.posts.isPending,
   posts: state.posts.posts,
+  profile: state.profile.profile
 })
 
 const mapDispatchToProps = dispatch => ({
-  requestPosts: (from) => getPostListAction(dispatch, from)
+  requestPosts: (from) => getPostListAction(dispatch, from),
+  clearProfile: () => dispatch(clearProfileAction())
 })
 
 class Home extends React.Component {
@@ -22,6 +25,9 @@ class Home extends React.Component {
   componentDidMount() {
     const from = 0;
     this.props.requestPosts(from);
+    if (this.props.profile) {
+      this.props.clearProfile();
+    }
   }
 
   render() {

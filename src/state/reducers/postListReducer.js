@@ -10,7 +10,8 @@ import {
     UPDATE_POST_REQUEST_FAILED,
     DELETE_POST_REQUEST_PENDING,
     DELETE_POST_REQUEST_SUCCESS,
-    DELETE_POST_REQUEST_FAILED
+    DELETE_POST_REQUEST_FAILED,
+    ADD_COMMENT_REQUEST_SUCCESS
 } from '../constants';
 
 const initialState = {
@@ -58,6 +59,15 @@ export const postListReducer = (state=initialState, action={}) => {
             })
         case DELETE_POST_REQUEST_FAILED:
             return Object.assign({}, state, { isPending: false, error: action.payload })
+        case ADD_COMMENT_REQUEST_SUCCESS:
+            return Object.assign({}, state, { 
+                isPending: false, 
+                posts: state.posts.map((post, i) => {
+                    if (post._id === action.payload._id) {
+                        return action.payload;
+                    }
+                    return post;
+                })})
         default:
             return state;
     }

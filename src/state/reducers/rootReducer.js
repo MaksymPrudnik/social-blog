@@ -13,7 +13,7 @@ export const rootReducer = combineReducers({
     auth: authReducer,
     credentials: changeCredentialsReducer,
     currentUser: getUserReducer,
-    user: getProfileReducer,
+    profile: getProfileReducer,
     posts: postListReducer,
     post_comment_input: changeInputReducer,
     friend: friendsReducer,

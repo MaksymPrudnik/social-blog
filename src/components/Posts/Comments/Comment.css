@@ -1,21 +1,19 @@
 .comment-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-    'author date'
-    'body body';
+    display: flex;
+    flex-direction: column;
     padding: 0.5rem;
     font-size: 1rem;
     border-top: 0.5px solid #aaa;
 }
 
 .comment-author {
-    grid-area: author;
     display: inline-block;
-    justify-self: left;
+    text-align: left;
 }
 .comment-author a {
     color: black;
+    font-weight: 550;
+    font-size: 1.3rem;
     text-decoration: none;
 }
 .comment-author a:hover {
@@ -23,9 +21,12 @@
 }
 
 .comment-date {
-    grid-area: date;
     font-size: 0.8em;
+    color: rgb(97, 96, 96);
+    text-align: left;
 }
+
 .comment-body {
-    grid-area: body;
+    font-size: 1.1rem;
+    padding: 0.3rem 0;
 }

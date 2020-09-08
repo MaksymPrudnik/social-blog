@@ -22,7 +22,7 @@ const User = () => {
     const dispatch = useDispatch();
     const { username } = useParams();
     const { path, url } = useRouteMatch();
-    const { profile, isPending, error } = useSelector(state => state.user);
+    const { profile, isPending, error } = useSelector(state => state.profile);
     // load profile if 
     // currently not loading already
     // we don't have profile

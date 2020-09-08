@@ -13,7 +13,8 @@ import { updatePostAction } from '../../state/actions/updatePostAction';
 import { deletePostAction } from '../../state/actions/deletePostAction';
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser.currentUser.username
+  currentUser: state.currentUser.currentUser.username,
+  isLoggedIn: state.auth.isLoggedIn
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -67,7 +68,7 @@ class Post extends React.Component {
   }
 
   render() {
-    const { currentUser, post, deletePost } = this.props;
+    const { currentUser, isLoggedIn, post, deletePost } = this.props;
     const { isUpdating, showComments, showAddCommentField, header, body } = this.state;
     const token = window.localStorage.getItem('token');
     const createdAt = new Date(post.createdAt).toLocaleString();
@@ -88,7 +89,7 @@ class Post extends React.Component {
             : null
           }
           <span className='post-author'>
-            <Link to={`/user/${post.createdBy}`} className='link db grow'>
+            <Link to={`/user/${post.createdBy}`} className='link db'>
               @{post.createdBy}
             </Link>
           </span>
@@ -115,11 +116,13 @@ class Post extends React.Component {
         {
           (post.createdAt !== post.updatedAt) && <span className='post-updated-at-span'><BiEditAlt />{updatedAt}</span>
         }
-        <div className='post-buttons'>
-          <span className='grow post-icon' onClick={this.showHideComments}><BiCommentDetail /></span>
-          <span className='grow post-icon' onClick={this.showAddCommentField}><BiCommentAdd /></span>
-        </div>
-        { showComments && <div className='post-comments'><CommentList comments={post.comments}/></div> }
+        { isLoggedIn && <div className='post-buttons'>
+          <span className='post-icon' onClick={this.showHideComments}><BiCommentDetail /></span>
+          <span className='post-icon' onClick={this.showAddCommentField}><BiCommentAdd /></span>
+        </div>}
+        { showComments && <div className='post-comments'>
+            <CommentList comments={post.comments} postOwner={post.createdBy} postId={post._id}/>
+          </div> }
         { showAddCommentField && <div className='post-add-comment'>
             <AddCommentField postOwner={post.createdBy} postId={post._id}/>
           </div> }

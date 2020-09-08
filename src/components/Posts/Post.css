@@ -46,14 +46,22 @@
   font-weight: 300;
   text-align: left;
 }
+.post-updated-at-span {
+  font-size: 0.8em;
+  color: rgb(43, 41, 41);
+  font-weight: 300;
+  text-align: right;
+}
 .post-header {
   font-size: 1.4em;
   font-weight: 600;
 }
 /* Post body */
 .post-body {
-  text-align: justify;
+  text-align: left;
+  font-size: 1.2rem;
   padding: 0.5rem;
+  overflow-wrap: break-word;
 }
 /* Post buttons */
 .post-buttons {

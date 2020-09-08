@@ -25,3 +25,12 @@
   font-size: 1.5rem;
   font-weight: 600;
 }
+
+@media (max-width: 600px) {
+  .register-box {
+    min-width: 250px;
+    border-right: none;
+    border-left: none;
+    border-radius: 0;
+  }
+}

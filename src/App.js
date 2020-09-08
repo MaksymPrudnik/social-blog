@@ -95,13 +95,19 @@ class App extends React.Component {
     const { isLoggedIn } = this.props;
     let rightPadding;
     let topPadding;
-    if (isLoggedIn) {
-      rightPadding = 250;
-      topPadding = 0;
+    if(window.innerWidth > 600) {
+      if (isLoggedIn) {
+        rightPadding = 250;
+        topPadding = 0;
+      } else {
+        rightPadding = 0;
+        topPadding = '10vh';
+      }
     } else {
       rightPadding = 0;
-      topPadding = '10vh';
+      topPadding = 0;
     }
+    
     return (
       <div className="App" style={{paddingRight: rightPadding, paddingTop: topPadding}}>
         <Router>

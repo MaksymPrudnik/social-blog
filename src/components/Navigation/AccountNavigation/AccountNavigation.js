@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 const AccountNavigation = ({ user }) => {
     const dispatch = useDispatch();
     const token = window.localStorage.getItem('token');
-    return (
+    return ( window.innerWidth > 600 ?
         <section className='account-nav-section'>
             <div className='dropdown'>
                 <div className='account-nav-profile'>
@@ -41,6 +41,22 @@ const AccountNavigation = ({ user }) => {
                 <li className='account-nav-link'><Link to={`/user/${user.username}/friends`}><FiUsers/> Friends</Link></li>
             </ul>
         </section>
+        : <nav className='account-nav-mobile'>
+            <ul className='account-nav-link-list-m'>
+                <li className='account-nav-link-m'>
+                    <Link to='/'><GoHome/></Link>
+                </li>
+                <li className='account-nav-link-m'>
+                    <Link to={`/user/${user.username}`}><RiAccountBoxLine/></Link>
+                </li>
+                <li className='account-nav-link-m'>
+                    <Link to={`/user/${user.username}/posts`}><GrArticle/></Link>
+                </li>
+                <li className='account-nav-link-m'>
+                    <Link to={`/user/${user.username}/friends`}><FiUsers/></Link>
+                </li>
+            </ul>
+        </nav>
     )
 }
 

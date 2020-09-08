@@ -12,13 +12,9 @@ const AddPostField = () => {
     const dispatch = useDispatch();
     const { header, body } = useSelector(state => state.post_comment_input);
     const token = window.localStorage.getItem('token');
-    const { username } = useSelector(state => state.currentUser.currentUser)
     const { isPending } = useSelector(state => state.posts)
     return (
         <section className='add-post-section'>
-            <div className='add-post-author'>
-                <span>@{username}</span>
-            </div>
             {
                 isPending
                 ? <Loader size='4rem' /> 
