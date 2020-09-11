@@ -35,7 +35,7 @@ export const postListReducer = (state=initialState, action={}) => {
         case ADD_POST_REQUEST_SUCCESS:
             return Object.assign({}, state, { isPending: false, posts: state.posts.concat(action.payload) });
         case ADD_POST_REQUEST_FAILED:
-            return Object.assign({}, state, { isPending: false, error: action.payload });
+            return Object.assign({}, state, { isPending: false, error: String(action.payload) });
         //update post
         case UPDATE_POST_REQUEST_PENDING:
             return Object.assign({}, state, { isPending: true })

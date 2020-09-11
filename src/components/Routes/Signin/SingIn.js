@@ -1,18 +1,16 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
-  setEmailAction, 
-  setPasswordAction 
-} from '../../../state/actions/credentialsActions';
 import { requestLoginAction } from '../../../state/actions/authActions';
 
 import './Signin.css';
 import Loader from '../../helpers/Loader/Loader';
+import { useFormInput } from '../../../hooks/hooks';
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const { email, password } = useSelector(state => state.credentials);
+  const email = useFormInput('');
+  const password = useFormInput('');
   const { isPending, error, jwt } = useSelector(state => state.auth);
   return (
     <section className='signin-section'>
@@ -27,7 +25,7 @@ const SignIn = () => {
                 type="email" 
                 name="email-address"  
                 id="email-address" 
-                onChange={(event) => dispatch(setEmailAction(event.target.value))}
+                { ...email }
                 />
             </div>
             <div className="mv3">
@@ -37,14 +35,14 @@ const SignIn = () => {
                 type="password" 
                 name="password"  
                 id="password" 
-                onChange={(event) => dispatch(setPasswordAction(event.target.value))}
+                { ...password }
                 />
             </div>
           </fieldset>
           <div>
             <button 
               className="signin-button b ph3 pv2 input-reset ba b--black bg-transparent grow pointer dib" 
-              onClick={() => requestLoginAction(dispatch, email, password)}
+              onClick={() => requestLoginAction(dispatch, email.value, password.value)}
             >Sign in </button>
           </div>
           <div className="lh-copy mt3">

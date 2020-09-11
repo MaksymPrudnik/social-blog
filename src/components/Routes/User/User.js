@@ -13,9 +13,11 @@ import Friends from '../../Friends/Friends';
 import Loader from '../../helpers/Loader/Loader';
 
 import { getProfileAction } from '../../../state/actions/getProfileAction';
+import { clearProfileAction } from '../../../state/actions/clearProfileAction';
 
 import { useParams, Switch, Route, useRouteMatch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 
 const User = () => {
@@ -23,22 +25,22 @@ const User = () => {
     const { username } = useParams();
     const { path, url } = useRouteMatch();
     const { profile, isPending, error } = useSelector(state => state.profile);
-    // load profile if 
-    // currently not loading already
-    // we don't have profile
-    // or if we have old one, that doesn't match url
-    if ( !isPending && !error && (!profile || profile.username !== username)) {
+    useEffect(() => {
         getProfileAction(dispatch, username);
-    }
+        return () => {
+            dispatch(clearProfileAction());
+        }
+    }, [dispatch, username])
     const currentUser = useSelector(state => state.currentUser.currentUser);
     const isProfileMatchUser = profile.username===currentUser.username;
     return (
         <main className='user-main'>
             { 
-            isPending ? <Loader size='5rem' /> 
+            isPending || !profile 
+            ? <Loader size='5rem' /> 
             : error ? <h1>{error}</h1>
             : <div>
-                <UserInfo user={profile} match={isProfileMatchUser}/>   
+                <UserInfo />   
                 <UserProfileNav url={url}/>
                 <Switch>
                     <Route path={`${path}/posts`}>

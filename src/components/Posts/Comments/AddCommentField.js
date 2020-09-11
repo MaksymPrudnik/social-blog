@@ -1,19 +1,18 @@
 import React from 'react';
-import jwt from 'jsonwebtoken';
-import { RiSendPlaneLine } from 'react-icons/ri';
-
 import './AddCommentField.css';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { changeBodyAction } from '../../../state/actions/changeInputAction';
 import { addCommentAction } from '../../../state/actions/addCommentAction';
+import { useFormInput } from '../../../hooks/hooks';
 import Loader from '../../helpers/Loader/Loader';
+import { RiSendPlaneLine } from 'react-icons/ri';
 
 const AddCommentField = ({ postOwner, postId }) => {
     const dispatch = useDispatch();
-    const { body } = useSelector(state => state.post_comment_input);
     const { isPending } = useSelector(state => state.comment);
+    const { username } = useSelector(state => state.currentUser.currentUser)
+    const body = useFormInput('');
     const token = window.localStorage.getItem('token');
-    const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
     return (
         <div>
             {
@@ -24,11 +23,14 @@ const AddCommentField = ({ postOwner, postId }) => {
                         className='add-comment-input' 
                         placeholder='Enter your comment' 
                         name='new-comment'
-                        onChange={(event) => dispatch(changeBodyAction(event.target.value))}
+                        { ...body }
                     />
                     <button 
                         className='add-comment-button'
-                        onClick={() => addCommentAction(dispatch, token, postOwner, postId, body)}
+                        onClick={() => {
+                            body.handleClear()
+                            addCommentAction(dispatch, token, postOwner, postId, body.value)
+                        }}
                     ><RiSendPlaneLine/></button>
                 </div>
             }

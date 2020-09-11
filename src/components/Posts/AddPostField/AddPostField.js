@@ -5,12 +5,13 @@ import { RiSendPlaneLine } from 'react-icons/ri';
 import Loader from '../../helpers/Loader/Loader';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { changeHeaderAction, changeBodyAction } from '../../../state/actions/changeInputAction';
 import { addNewPostAction } from '../../../state/actions/addNewPostAction';
+import { useFormInput } from '../../../hooks/hooks';
 
 const AddPostField = () => {
     const dispatch = useDispatch();
-    const { header, body } = useSelector(state => state.post_comment_input);
+    const header = useFormInput('');
+    const body = useFormInput('');
     const token = window.localStorage.getItem('token');
     const { isPending } = useSelector(state => state.posts)
     return (
@@ -24,23 +25,23 @@ const AddPostField = () => {
                         type="text" 
                         placeholder='Post header' 
                         name='post-header'
-                        onChange={(event) => dispatch(changeHeaderAction(event.target.value))}
+                        { ...header }
                     />
                     <textarea 
                         className='add-post-body'  
                         placeholder='...' 
                         name='new-post'
-                        onChange={(event) => dispatch(changeBodyAction(event.target.value))}
+                        { ...body }
                     />
                 </div>
             }
             <div className='add-post-button'>
                 {
-                    isPending ? <Loader size='2.5rem' /> 
-                    : <button onClick={() => {
-                            dispatch(changeHeaderAction(''))
-                            dispatch(changeBodyAction(''))
-                            addNewPostAction(dispatch, token, header, body)
+                    !isPending &&
+                    <button onClick={() => {
+                            header.handleClear();
+                            body.handleClear();
+                            addNewPostAction(dispatch, token, header.value, body.value)
                         }}>
                     <RiSendPlaneLine/></button>
                 }

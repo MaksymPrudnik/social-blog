@@ -10,11 +10,13 @@ import { BiDownArrow } from 'react-icons/bi';
 import './AccountNavigation.css';
 import { requestSignoutAction } from '../../../state/actions/authActions';
 import { useDispatch } from 'react-redux';
+import { useWindowWidth } from '../../../hooks/hooks';
 
 const AccountNavigation = ({ user }) => {
     const dispatch = useDispatch();
+    const width = useWindowWidth();
     const token = window.localStorage.getItem('token');
-    return ( window.innerWidth > 600 ?
+    return ( width > 600 ?
         <section className='account-nav-section'>
             <div className='dropdown'>
                 <div className='account-nav-profile'>

@@ -1,19 +1,17 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { 
-  setUsernameAction,
-  setEmailAction, 
-  setPasswordAction 
-} from '../../../state/actions/credentialsActions';
 import { requestRegisterAction } from '../../../state/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './Register.css';
 import Loader from '../../helpers/Loader/Loader';
+import { useFormInput } from '../../../hooks/hooks';
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { username, email, password } = useSelector(state => state.credentials);
+  const username = useFormInput('');
+  const email = useFormInput('');
+  const password = useFormInput('');
   const { isPending, jwt, error } = useSelector(state => state.auth);
   return (
     <section className='register-section'>
@@ -28,7 +26,7 @@ const Register = () => {
                 type="text" 
                 name="username"  
                 id="username" 
-                onChange={(event) => dispatch(setUsernameAction(event.target.value))}
+                {  ...username }
                 />
             </div>
             <div className="mt3">
@@ -38,7 +36,7 @@ const Register = () => {
                 type="email" 
                 name="email-address"  
                 id="email-address" 
-                onChange={(event) => dispatch(setEmailAction(event.target.value))}
+                { ...email }
                 />
             </div>
             <div className="mv3">
@@ -48,7 +46,7 @@ const Register = () => {
                 type="password" 
                 name="password"  
                 id="password" 
-                onChange={(event) => dispatch(setPasswordAction(event.target.value))}
+                { ...password }
                 />
             </div>
           </fieldset>
@@ -57,7 +55,7 @@ const Register = () => {
               className="register-button b ph3 pv2 input-reset ba b--black bg-transparent grow pointer dib" 
               type="submit" 
               value="Register" 
-              onClick={() => requestRegisterAction(dispatch, username, email, password)}
+              onClick={() => requestRegisterAction(dispatch, username.value, email.value, password.value)}
             />
           </div>
           <div className="lh-copy mt3">
