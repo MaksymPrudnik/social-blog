@@ -31,8 +31,8 @@ const Post = ({ post }) => {
     <section className='post-section'>
       <div className='post-description'>
         { 
-          (currentUser.username===post.createdBy) &&
-          updatingPost 
+          currentUser.username===post.createdBy
+          ? updatingPost 
           ? <div className='post-actions-div'>
             <RiCheckboxLine onClick={() => {
               updatePostAction(dispatch,token, post._id, header.value, body.value);
@@ -44,6 +44,7 @@ const Post = ({ post }) => {
             <FaRegEdit onClick={() => setUpdatingPost(true)}/>
             <RiDeleteBinLine onClick={() => deletePostAction(dispatch, token, post._id)}/>
           </div>
+          : null
         }
         <span className='post-author'>
           <Link to={`/user/${post.createdBy}`} className='link db'>
