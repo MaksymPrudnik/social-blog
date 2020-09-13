@@ -58,12 +58,12 @@
     width: 2.5rem;
     padding: 0;
     text-align: center;
-    background-color: transparent;
+    background-color: #adf;
     border-radius: 1.25rem;
-    border: 1px solid #aaa;
+    border: 1px solid #aaf;
 }
 .add-post-button button:hover {
-    background-color: #fffb;
+    background-color: #aaf;
     cursor: pointer;
 }
 .add-post-button button:focus {
@@ -72,6 +72,7 @@
     box-shadow: 0 0 4px #333;
 }
 .add-post-button svg {
+    font-size: 1.2rem;
     display: block;
     margin: 0 auto;
 }

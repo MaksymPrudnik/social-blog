@@ -25,7 +25,7 @@ const Home = () => {
       }
       { 
         isPending 
-        ? <Loader size='4rem' />
+        ? <div style={{paddingTop: '40%'}}><Loader size='5rem' /></div>
         : error 
         ? <h2>{error}</h2> 
         : <PostList posts={posts} isPending={isPending}/>

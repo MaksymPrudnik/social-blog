@@ -7,7 +7,7 @@
 
 .signin-box {
   min-width: 400px;
-  background-color: #fff2;
+  background-color: #adfc;
   border: 1.5px solid #aaa;
   border-radius: 15px;
   box-shadow: 4px 4px 4px #0003;
@@ -28,7 +28,7 @@
 
 @media (max-width: 600px) {
   .signin-box {
-    min-width: 250px;
+    min-width: 100%;
     border-right: none;
     border-left: none;
     border-radius: 0;

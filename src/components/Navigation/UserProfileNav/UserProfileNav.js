@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { FiUsers } from 'react-icons/fi';
-import { GrArticle } from 'react-icons/gr';
+import { BsFileText } from 'react-icons/bs';
 
 import './UserProfileNav.css';
 
 const UserProfileNav = ({url}) => {
     return (
         <div className='user-profile-nav-section'>
-            <Link to={`${url}/posts`}><GrArticle /> Posts</Link>
-            <Link to={`${url}/friends`}><FiUsers /> Friends</Link>
+            <NavLink activeClassName='selected-link' to={`${url}/posts`}><BsFileText /> Posts</NavLink>
+            <NavLink activeClassName='selected-link' to={`${url}/friends`}><FiUsers /> Friends</NavLink>
         </div>
     )
 }

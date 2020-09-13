@@ -50,7 +50,7 @@ const Post = ({ post }) => {
             @{post.createdBy}
           </Link>
         </span>
-        <span className='post-creation-date-time'>{createdAt}</span>
+        <span className='post-creation-date-time minor-info'>{createdAt}</span>
         {
           updatingPost 
           ? <input 
@@ -69,7 +69,7 @@ const Post = ({ post }) => {
         : <div className='post-body'> { post.body } </div>
       }
       {
-        (post.createdAt !== post.updatedAt) && <span className='post-updated-at-span'><BiEditAlt />{updatedAt}</span>
+        (post.createdAt !== post.updatedAt) && <span className='post-updated-at-span minor-info'><BiEditAlt />{updatedAt}</span>
       }
       { isLoggedIn && <div className='post-buttons'>
         <span className='post-icon' onClick={comments.onClick}><BiCommentDetail /></span>

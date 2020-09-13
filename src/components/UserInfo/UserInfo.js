@@ -28,7 +28,7 @@ const UserInfo = () => {
                     <div className='userinfo-full-name'>
                         { profile.name && `${profile.name.first} ${profile.name.last}`}
                     </div>
-                    <span className='userinfo-posts-count'>{`${profile.posts.length} Posts`}</span>
+                    <span className='userinfo-posts-count minor-info'>{`${profile.posts.length} Posts`}</span>
                     <div className='userinfo-avatar'>
                         <Avatar imageUrl={profile.avatar} size='8rem'/>
                     </div>
@@ -37,7 +37,7 @@ const UserInfo = () => {
                         <span>{ profile.name && `${profile.name.first} ${profile.name.last}`}</span>
                         <span>@{profile.username}</span>
                     </div>
-                    <span className='userinfo-date'>{`Member since ${normalDate}`}</span>
+                    <span className='userinfo-date minor-info'>{`Member since ${normalDate}`}</span>
                 </div>
             }
         </header>

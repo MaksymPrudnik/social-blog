@@ -37,7 +37,7 @@ const User = () => {
         <main className='user-main'>
             { 
             isPending || !profile 
-            ? <Loader size='5rem' /> 
+            ? <div style={{paddingTop: '40vh'}}><Loader size='5rem'/></div>
             : error ? <h1>{error}</h1>
             : <div>
                 <UserInfo />   

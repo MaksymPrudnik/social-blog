@@ -1,15 +1,22 @@
-body {
+html, body {
   margin: 0;
-  background: linear-gradient(to right, #D0F7F1, #1df0d0)
 }
 
-
 .App {
+  height: 100%;
   text-align: center;
 }
 
-@media (max-width: 600px) {
-  .App {
-    padding-bottom: 10vh;
-  }
+.minor-info {
+  font-size: 0.9rem;
+  font-weight: 250;
+  color: grey;
+}
+a, a:visited {text-decoration: none;color: initial;}
+.selected-link {
+  color: #3f3fff;
+  border-bottom: 2px solid #3f5fff;
+}
+a.selected-link {
+  color: #3f3fff;
 }

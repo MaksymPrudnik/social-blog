@@ -10,10 +10,8 @@
     display: block;
     width: 100%;
     font-size: 1.5rem;
-    color: black;
-    text-decoration: none;
     padding: 1rem 0;
 }
 .user-profile-nav-section a:hover {
-    background-color: #fffc;
+    background-color: #acf2;
 }
