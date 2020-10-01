@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   BrowserRouter as Router,
   Switch, Route
@@ -15,50 +15,51 @@ import Home from './components/Routes/Home/Home';
 import SignIn from './components/Routes/Signin/SingIn';
 import Register from './components/Routes/Register/Register';
 import User from './components/Routes/User/User';
-import Authorization from './components/helpers/Authorization/Authorization';
+import Logout from './components/Routes/Logout/Logout';
 
 import 'tachyons';
 import './App.css';
-import { useEffect } from 'react';
 import { useWindowWidth } from './hooks/hooks';
+import Loader from './components/helpers/Loader/Loader';
 
 
 const App = () => {
 
   const dispatch = useDispatch();
-  const { isLoggedIn, usedLogout } = useSelector(state => state.auth);
-  const stateToken = useSelector(state => state.auth.jwt);
+
+  const { isLoggedIn } = useSelector(state => state.auth);
   const { currentUser, error } = useSelector(state => state.currentUser);
   const token = window.localStorage.getItem('token');
 
+  // for instant loading simulation
+  const [ loading, setLoading ] = useState(true)
+  
+  // login after refresh or page closing
   useEffect(() => {
-  // We can have 4 possible cases to hit '/' (home):
-  // 1)new visitor - state == initialState, token is empty
-  // 2)redirect from login/register - auth filled (usedLogout == false), current user empty, token isn't in localStorage
-  // 3)redirect after logout - auth filled (usedLogout == true), current user filled, token in storage
-  // 4)page reload || come back - state == initialState, token in localStorage
-  // 5)manualy navigate to '/' - auth filled (usedLogout == false), current user filled, token in storage
-    if (!currentUser && !usedLogout) { // 1 && 2 && 4
-      if (token) { // 4
-        const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-        getUserAction(dispatch, username);
-      } else if (stateToken && isLoggedIn) { // 2
-        const token = stateToken;
-        window.localStorage.setItem('token', token);
-        const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
-        getUserAction(dispatch, username);
-      }
-    }
-    if (token && usedLogout) { // 3
-      window.localStorage.removeItem('token')
+    if(token && !isLoggedIn) {
+      dispatch(loginWithTokenAction(token))
     }
     if (error === 'Unable to get user') { // if wrong token
       window.localStorage.removeItem('token');
+      Location.reload()
     }
-    if(currentUser && token && !usedLogout && !isLoggedIn) { // 4 after loading currentUser
-      dispatch(loginWithTokenAction(token))
+  }, [token, isLoggedIn, error, dispatch])
+
+  // load user object if don't have one
+  useEffect(() => {
+    if (isLoggedIn && token && !currentUser) {
+      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+      getUserAction(dispatch, username)
     }
-  })
+  }, [token, isLoggedIn, currentUser, dispatch])
+
+  // stop loading process for fresh user or if user object already loaded
+  useEffect(() => {
+    if (!token) setLoading(false)
+    if (currentUser) setLoading(false)
+  }, [token, currentUser])
+
+  // changing margins depending on kind of menu (desktop || mobile)
   const width = useWindowWidth();
   let margin;
   if (width > 600) {
@@ -71,10 +72,13 @@ const App = () => {
     margin = '0 0 10vh 0';
   }
 
-  return (
-    <div className="App" style={{margin}}>
+  return loading
+  ? <div style={{height: '100vh', display: 'flex', alignItems: 'center'}}>
+      <Loader size='5rem' />
+    </div>
+  : <div className="App" style={{margin}}>
       <Router>
-        <Navigation />
+        <Navigation isLoggedIn={isLoggedIn} />
         <Switch>
           <Route exact path='/'>
             <Home />
@@ -86,13 +90,12 @@ const App = () => {
             <Register />
           </Route>
           <Route path='/user/:username' children={<User />}/>
-          <Route path='/authorization'>
-            <Authorization />
+          <Route path='/logout'>
+            <Logout />
           </Route>
         </Switch>
       </Router>
     </div>
-  )
 }
 
 export default App;

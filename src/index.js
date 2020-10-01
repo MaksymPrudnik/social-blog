@@ -8,6 +8,8 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootReducer } from './state/reducers/rootReducer';
 
+import addSubscriptionToSW from './serviceWorkerExtended';
+
 let devMiddleWare;
 
 if (process.env.NODE_ENV === 'development') {
@@ -32,3 +34,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register();
+addSubscriptionToSW();

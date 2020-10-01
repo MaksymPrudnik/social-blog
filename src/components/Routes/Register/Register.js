@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { requestRegisterAction } from '../../../state/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,13 @@ const Register = () => {
   const email = useFormInput('');
   const password = useFormInput('');
   const { isPending, jwt, error } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (jwt) {
+      localStorage.setItem('token', jwt)
+    }
+  }, [jwt])
+
   return (
     <section className='register-section'>
       <main className="pa4 black-80 signin-box">

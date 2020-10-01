@@ -7,10 +7,10 @@ import AccountNavigation from './AccountNavigation/AccountNavigation';
 import './Navigation.css';
 
 
-const Navigation = () => {
-  const { isLoggedIn } = useSelector(state => state.auth);
+const Navigation = ({isLoggedIn}) => {
   const { currentUser } = useSelector(state => state.currentUser);
-  return isLoggedIn ? <AccountNavigation user={currentUser}/> 
+  return isLoggedIn 
+  ? <AccountNavigation user={currentUser}/> 
   : <UnAuthNavigation />
 }
 

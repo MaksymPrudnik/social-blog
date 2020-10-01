@@ -1,0 +1,21 @@
+.notification-button-div {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 2rem;
+}
+.notification-button-div button {
+    background-color: #cdf;
+    padding: 0.5rem 0.5rem 0.3rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    border: 1.5px solid #cdf;
+}
+.notification-button-div button:hover {
+    background-color: transparent;
+}
+
+.notification-button-div button:disabled {
+    background-color: #eee;
+    border: 1.5px solid black;
+    color: black;
+}

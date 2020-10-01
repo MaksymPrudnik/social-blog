@@ -6,12 +6,20 @@ import { requestLoginAction } from '../../../state/actions/authActions';
 import './Signin.css';
 import Loader from '../../helpers/Loader/Loader';
 import { useFormInput } from '../../../hooks/hooks';
+import { useEffect } from 'react';
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const email = useFormInput('');
   const password = useFormInput('');
   const { isPending, error, jwt } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (jwt) {
+      localStorage.setItem('token', jwt)
+    }
+  }, [jwt])
+
   return (
     <section className='signin-section'>
       <main className="pa4 black-80 signin-box">
@@ -25,7 +33,8 @@ const SignIn = () => {
                 type="email" 
                 name="email-address"  
                 id="email-address" 
-                { ...email }
+                value={email.value}
+                onChange={email.onChange}
                 />
             </div>
             <div className="mv3">
@@ -35,7 +44,8 @@ const SignIn = () => {
                 type="password" 
                 name="password"  
                 id="password" 
-                { ...password }
+                value={password.value}
+                onChange={password.onChange}
                 />
             </div>
           </fieldset>

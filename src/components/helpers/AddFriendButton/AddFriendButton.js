@@ -23,10 +23,10 @@ const AddFriendButton = () => {
                     : (currentUser.friends.existing.includes(profile.username) && 
                         <button disabled>Added</button>) ||
                     // already requested
-                    (currentUser.friend.outcommingRequests.includes(profile.username) && 
+                    (currentUser.friends.outcommingRequests.includes(profile.username) && 
                         <button disabled>Requested</button>) ||
                     // got request
-                    (currentUser.friend.incommingRequests.includes(profile.username) && 
+                    (currentUser.friends.incommingRequests.includes(profile.username) && 
                         <button disabled>Requested</button>) ||
                     // default one
                     <button onClick={() => sendFriendRequestAction(dispatch, token, profile.username)}>

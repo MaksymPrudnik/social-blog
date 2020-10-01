@@ -14,7 +14,6 @@ import {
 const authInitialState = {
     isPending: false,
     isLoggedIn: false,
-    usedLogout: false,
     jwt: '',
     error: ''
 }
@@ -29,21 +28,18 @@ export const authReducer = (state=authInitialState, action={}) => {
                 jwt: action.payload.token,
                 isPending: false,
                 isLoggedIn: true,
-                usedLogout: false
             });
         case LOGIN_REQUEST_FAILED:
             return Object.assign({}, state, {
                 error: action.payload,
                 isPending: false,
                 isLoggedIn: false,
-                usedLogout: false
             });
         // login with token
         case LOGIN_WITH_TOKEN:
             return Object.assign({}, state, {
                 isPending: false,
                 isLoggedIn: true,
-                usedLogout: false,
                 jwt: action.payload
             })
         // register
@@ -54,14 +50,12 @@ export const authReducer = (state=authInitialState, action={}) => {
                 jwt: action.payload.token,
                 isPending: false,
                 isLoggedIn: true,
-                usedLogout: false
             });
         case REGISTER_REQUEST_FAILED:
             return Object.assign({}, state, {
                 error: action.payload,
                 isPending: false,
                 isLoggedIn: false,
-                usedLogout: false
             });
         // signout
         case SIGNOUT_REQUEST_PENDING:
@@ -70,7 +64,6 @@ export const authReducer = (state=authInitialState, action={}) => {
             return Object.assign({}, state, {
                 isPending: false,
                 isLoggedIn: false,
-                usedLogout: true,
                 jwt: '',
                 error: ''
             })
