@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const host = process.env.REACT_APP_HOST || 'http://localhost:3000';
+const pushServerPublicKey = 'BE2W2l4rRTXx4IC36MRNX8Xjoxq9q4fqCMavQzyf5zXqPmgPXS5JBCkifq3JViVgT9H4xeEwi9LIfDZHOkRgEnI';
 
 const usePushNotification = () => {
 
@@ -10,11 +11,19 @@ const usePushNotification = () => {
 
 
     // get subscription object
-    useEffect(() => {
-        navigator.serviceWorker.ready
-        .then(registration => registration.pushManager.getSubscription())
-        .then(subscription => setUserSubscription(subscription))
-        .catch(error => setError(error))
+    useEffect( async () => {
+        if (!userSubscription && 'serviceWorker' in navigator) {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.getSubscription()
+            if (subscription) {
+                setUserSubscription(subscription);
+            } else {
+                registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(pushServerPublicKey)
+                })
+            }
+        }
     },[])
 
     const sendSubscriptionToServer = (token) => {
@@ -57,3 +66,18 @@ const usePushNotification = () => {
 }
 
 export default usePushNotification;
+
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+    
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
