@@ -41,7 +41,6 @@ const App = () => {
     }
     if (error === 'Unable to get user') { // if wrong token
       window.localStorage.removeItem('token');
-      Location.reload()
     }
   }, [token, isLoggedIn, error, dispatch])
 
