@@ -9,11 +9,12 @@ import { BiDownArrow } from 'react-icons/bi';
 
 import './AccountNavigation.css';
 import { requestSignoutAction } from '../../../state/actions/authActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useWindowWidth } from '../../../hooks/hooks';
 
-const AccountNavigation = ({ user }) => {
+const AccountNavigation = () => {
     const dispatch = useDispatch();
+    const { currentUser } = useSelector(state => state.currentUser);
     const width = useWindowWidth();
     const token = window.localStorage.getItem('token');
     return ( width > 600 ?
@@ -23,9 +24,9 @@ const AccountNavigation = ({ user }) => {
                     <Avatar size='3rem'/>
                     <div className='account-nav-profile-names'>
                         <div className='account-nav-profile-full-name'>
-                            { user.name && `${user.name.first} ${user.name.last}`}
+                            { currentUser.name && `${currentUser.name.first} ${currentUser.name.last}`}
                         </div>
-                        <div className='account-nav-profile-username'>@{user.username}</div>
+                        <div className='account-nav-profile-username'>@{currentUser.username}</div>
                     </div>
                     <div className='account-nav-profile-arrow'><BiDownArrow/></div>
                 </div>
@@ -38,9 +39,9 @@ const AccountNavigation = ({ user }) => {
             </div>
             <ul className='account-nav-link-list'>
                 <li className='account-nav-link'><Link to='/'><GoHome/> Home</Link></li>
-                <li className='account-nav-link'><Link to={`/user/${user.username}`}><RiAccountBoxLine/> Account</Link></li>
-                <li className='account-nav-link'><Link to={`/user/${user.username}/posts`}><GrArticle/> Posts</Link></li>
-                <li className='account-nav-link'><Link to={`/user/${user.username}/friends`}><FiUsers/> Friends</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${currentUser.username}`}><RiAccountBoxLine/> Account</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${currentUser.username}/posts`}><GrArticle/> Posts</Link></li>
+                <li className='account-nav-link'><Link to={`/user/${currentUser.username}/friends`}><FiUsers/> Friends</Link></li>
             </ul>
         </section>
         : <nav className='account-nav-mobile'>
@@ -49,13 +50,13 @@ const AccountNavigation = ({ user }) => {
                     <Link to='/'><GoHome/></Link>
                 </li>
                 <li className='account-nav-link-m'>
-                    <Link to={`/user/${user.username}`}><RiAccountBoxLine/></Link>
+                    <Link to={`/user/${currentUser.username}`}><RiAccountBoxLine/></Link>
                 </li>
                 <li className='account-nav-link-m'>
-                    <Link to={`/user/${user.username}/posts`}><GrArticle/></Link>
+                    <Link to={`/user/${currentUser.username}/posts`}><GrArticle/></Link>
                 </li>
                 <li className='account-nav-link-m'>
-                    <Link to={`/user/${user.username}/friends`}><FiUsers/></Link>
+                    <Link to={`/user/${currentUser.username}/friends`}><FiUsers/></Link>
                 </li>
             </ul>
         </nav>

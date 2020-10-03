@@ -4,7 +4,7 @@ import {
   Switch, Route
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import jwt from 'jsonwebtoken';
+import jsonwebtoken from 'jsonwebtoken';
 
 import { getUserAction } from './state/actions/getUserAction';
 import { loginWithTokenAction } from './state/actions/authActions';
@@ -27,9 +27,9 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoggedIn } = useSelector(state => state.auth);
+  const { isLoggedIn, jwt } = useSelector(state => state.auth);
   const { currentUser, error } = useSelector(state => state.currentUser);
-  const token = window.localStorage.getItem('token');
+  const token = localStorage.getItem('token') || jwt;
 
   // for instant loading simulation
   const [ loading, setLoading ] = useState(true)
@@ -46,8 +46,9 @@ const App = () => {
 
   // load user object if don't have one
   useEffect(() => {
+    console.log(isLoggedIn, token, Boolean(currentUser))
     if (isLoggedIn && token && !currentUser) {
-      const username = jwt.verify(token, process.env.REACT_APP_JWT_SECRET || 'jwt_secret_string').username;
+      const username = jsonwebtoken.verify(token, process.env.REACT_APP_jsonwebtoken_SECRET || 'jwt_secret_string').username;
       getUserAction(dispatch, username)
     }
   }, [token, isLoggedIn, currentUser, dispatch])
