@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { pushServerPublicKey, urlBase64ToUint8Array } from '../ServiceWorkerSetup';
+import { subscriptionAddedAction } from '../state/actions/updateUserActions';
 
 const host = process.env.REACT_APP_HOST || 'http://localhost:3000';
 
 const usePushNotification = () => {
+
+    const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -16,19 +19,19 @@ const usePushNotification = () => {
     // get subscription object
     useEffect(() => {
         async function checkSubscription() {
-            if (!userSubscription && 'serviceWorker' in navigator) {
+            if ('serviceWorker' in navigator && (!userSubscription || (userSubscription && !subscription))) {
                 try {
                     const registration = await navigator.serviceWorker.ready;
-                    let subscription = await registration.pushManager.getSubscription();
+                    let newSubscription = await registration.pushManager.getSubscription();
                     
-                    if (!subscription) {
-                        subscription = await registration.pushManager.subscribe({
+                    if (!newSubscription) {
+                        newSubscription = await registration.pushManager.subscribe({
                             userVisibleOnly: true,
                             applicationServerKey: urlBase64ToUint8Array(pushServerPublicKey)
                         })
                     }
                     
-                    if (subscription) return setUserSubscription(subscription);
+                    if (newSubscription) return setUserSubscription(newSubscription);
 
                     throw new Error('Subscription object wasn\'t found and programm failed to create new one')
                 } catch (error) {
@@ -37,7 +40,7 @@ const usePushNotification = () => {
             }
         }
         checkSubscription();
-    }, [userSubscription])
+    }, [subscription, userSubscription])
 
     useEffect(() => {
         if (!subscription && Notification.permission === 'granted' && userSubscription) {
@@ -59,9 +62,10 @@ const usePushNotification = () => {
             })
         })
         .then(response => {
-            if (response.status !== 201) {
-                return Promise.reject('Error sending subscription to server')
+            if (response.status === 202) {
+                dispatch(subscriptionAddedAction(userSubscription))
             }
+            return Promise.reject('Error sending subscription to server')
         })
         .catch(err => setError(err))
         .finally(() => setLoading(false))

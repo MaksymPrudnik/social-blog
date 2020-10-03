@@ -2,7 +2,8 @@ import {
     GET_USER_REQUEST_PENDING,
     GET_USER_REQUEST_SUCCESS,
     GET_USER_REQUEST_FAILED,
-    SIGNOUT_REQUEST_SUCCESS
+    SIGNOUT_REQUEST_SUCCESS,
+    SUBSCRIPTION_ADDED
 } from '../constants';
 
 const initialState = {
@@ -31,6 +32,10 @@ export const getUserReducer = (state=initialState, action={}) => {
                 currentUser: '',
                 error: ''
             })
+        case SUBSCRIPTION_ADDED:
+            const updatedUser = {...state.currentUser};
+            updatedUser.notifications.subscription = action.payload;
+            return { ...state, currentUser: updatedUser}
         default:
             return state;
     }

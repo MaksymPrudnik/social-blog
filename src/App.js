@@ -46,7 +46,6 @@ const App = () => {
 
   // load user object if don't have one
   useEffect(() => {
-    console.log(isLoggedIn, token, Boolean(currentUser))
     if (isLoggedIn && token && !currentUser) {
       const username = jsonwebtoken.verify(token, process.env.REACT_APP_jsonwebtoken_SECRET || 'jwt_secret_string').username;
       getUserAction(dispatch, username)
