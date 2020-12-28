@@ -1,8 +1,17 @@
-import { takeLatest } from "redux-saga/effects";
+import { takeLatest, put } from "redux-saga/effects";
+import { makeGetRequest } from "../../services/axios";
 import { postActionTypes } from "./types";
+import { getPostsListSuccess, getPostsListFailure } from "./actions";
 
 export function* getPostsListAsync() {
-  yield console.log("");
+  try {
+    const posts = yield makeGetRequest({
+      url: "/posts",
+    });
+    yield put(getPostsListSuccess(posts));
+  } catch ({ message }) {
+    yield put(getPostsListFailure(message));
+  }
 }
 
 export function* getPostsListStart() {

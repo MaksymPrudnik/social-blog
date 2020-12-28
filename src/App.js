@@ -6,18 +6,16 @@ import jsonwebtoken from "jsonwebtoken";
 import { getUserAction } from "./state/actions/getUserAction";
 import { loginWithTokenAction } from "./state/actions/authActions";
 
-import Navigation from "./components/Navigation/Navigation";
 // Routes
-import Home from "./components/Routes/Home/Home";
-import SignIn from "./components/Routes/Signin/SingIn";
+import { Home } from "./pages/home";
+import { SignIn } from "./pages/signin";
 import Register from "./components/Routes/Register/Register";
 import User from "./components/Routes/User/User";
 import Logout from "./components/Routes/Logout/Logout";
 
 import "tachyons";
 import "./App.css";
-import { useWindowWidth } from "./hooks/hooks";
-import Loader from "./components/helpers/Loader/Loader";
+import { Header } from "./components/Header";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -57,27 +55,10 @@ const App = () => {
     if (currentUser) setLoading(false);
   }, [token, currentUser]);
 
-  // changing margins depending on kind of menu (desktop || mobile)
-  const width = useWindowWidth();
-  let margin;
-  if (width > 600) {
-    if (isLoggedIn) {
-      margin = "0 250px 0 0";
-    } else {
-      margin = "10vh 0 0 0";
-    }
-  } else {
-    margin = "0 0 10vh 0";
-  }
-
-  return loading ? (
-    <div style={{ height: "100vh", display: "flex", alignItems: "center" }}>
-      <Loader size="5rem" />
-    </div>
-  ) : (
-    <div className="App" style={{ margin }}>
+  return (
+    <div className="App">
       <Router>
-        <Navigation isLoggedIn={isLoggedIn} />
+        <Header />
         <Switch>
           <Route exact path="/">
             <Home />
