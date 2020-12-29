@@ -9,56 +9,32 @@ import { loginWithTokenAction } from "./state/actions/authActions";
 // Routes
 import { Home } from "./pages/home";
 import { SignIn } from "./pages/signin";
-import Register from "./components/Routes/Register/Register";
+import { SignUp } from "./pages/signup";
 import User from "./components/Routes/User/User";
 import Logout from "./components/Routes/Logout/Logout";
 
-import "tachyons";
 import "./App.css";
 import { Header } from "./components/Header";
+import { getMeStart } from "./state/auth/actions";
+import Loader from "./components/helpers/Loader/Loader";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, jwt } = useSelector((state) => state.auth);
-  const { currentUser, error } = useSelector((state) => state.currentUser);
-  const token = localStorage.getItem("token") || jwt;
+  const { username, isLoading } = useSelector((state) => state.auth);
+  const accessToken = localStorage.getItem("accessToken");
 
-  // for instant loading simulation
-  const [loading, setLoading] = useState(true);
-
-  // login after refresh or page closing
   useEffect(() => {
-    if (token && !isLoggedIn) {
-      dispatch(loginWithTokenAction(token));
+    if (accessToken && !username) {
+      dispatch(getMeStart(accessToken));
     }
-    if (error === "Unable to get user") {
-      // if wrong token
-      window.localStorage.removeItem("token");
-    }
-  }, [token, isLoggedIn, error, dispatch]);
-
-  // load user object if don't have one
-  useEffect(() => {
-    if (isLoggedIn && token && !currentUser) {
-      const username = jsonwebtoken.verify(
-        token,
-        process.env.REACT_APP_jsonwebtoken_SECRET || "jwt_secret_string"
-      ).username;
-      getUserAction(dispatch, username);
-    }
-  }, [token, isLoggedIn, currentUser, dispatch]);
-
-  // stop loading process for fresh user or if user object already loaded
-  useEffect(() => {
-    if (!token) setLoading(false);
-    if (currentUser) setLoading(false);
-  }, [token, currentUser]);
+  }, [accessToken, username, dispatch]);
 
   return (
     <div className="App">
       <Router>
         <Header />
+        {isLoading ? <Loader size="3rem" /> : null}
         <Switch>
           <Route exact path="/">
             <Home />
@@ -67,7 +43,7 @@ const App = () => {
             <SignIn />
           </Route>
           <Route exact path="/register">
-            <Register />
+            <SignUp />
           </Route>
           <Route path="/user/:username" children={<User />} />
           <Route path="/logout">

@@ -1,47 +1,73 @@
-import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { FormInput } from "../../components/FormInput";
+import { useFormInput } from "../../hooks/useFormInput";
+import { registerStart } from "../../state/auth/actions";
+import {
+  FormContainer,
+  ImageContainer,
+  SignupContainer,
+  SubmitButton,
+} from "./styled";
 
-export const SignupContainer = styled.div`
-  width: 100%;
-  flex-grow: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: center;
-`;
+export const SignUp = () => {
+  const dispatch = useDispatch();
+  const email = useFormInput();
+  const password = useFormInput();
+  const username = useFormInput();
+  const confirmPassword = useFormInput();
+  const onSubmit = (event) => {
+    event.preventDefault();
 
-export const ImageContainer = styled.div`
-  background-color: lightcoral;
-  width: 50vw;
-  height: 100%;
-  @media screen and (max-width: 800px) {
-    & {
-      display: none;
+    if (password.inputProps.value !== confirmPassword.inputProps.value) {
+      alert("Passwords do not match");
+      return;
     }
-  }
-`;
 
-export const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-`;
+    dispatch(
+      registerStart(
+        email.inputProps.value,
+        password.inputProps.value,
+        username.inputProps.value
+      )
+    );
 
-export const SubmitButton = styled.input`
-  padding: 0.5rem;
-  border: 1px solid grey;
-  border-radius: 0.3rem;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 1.2rem;
-  background-color: black;
-  color: white;
+    email.clearValue();
+    password.clearValue();
+    username.clearValue();
+    confirmPassword.clearValue();
+  };
 
-  &:hover {
-    background-color: #111;
-    cursor: pointer;
-  }
+  return (
+    <SignupContainer>
+      <ImageContainer />
+      <FormContainer onSubmit={onSubmit}>
+        <FormInput
+          type="text"
+          name="username"
+          label="Username"
+          {...username.inputProps}
+        />
+        <FormInput
+          type="email"
+          name="email"
+          label="Email"
+          {...email.inputProps}
+        />
+        <FormInput
+          type="password"
+          name="password"
+          label="Password"
+          {...password.inputProps}
+        />
+        <FormInput
+          type="password"
+          name="confirm"
+          label="Confirm password"
+          {...confirmPassword.inputProps}
+        />
 
-  &:focus {
-    outline: none;
-  }
-`;
+        <SubmitButton type="submit" value="Sing in" />
+      </FormContainer>
+    </SignupContainer>
+  );
+};

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { authReducer } from "./reducers/authReducer";
+import { authReducer } from "./auth/reducer";
 import { getUserReducer } from "./reducers/getUserReducer";
 import { postListReducer } from "./reducers/postListReducer";
 import { getProfileReducer } from "./reducers/getProfileReducer";

@@ -1,5 +1,7 @@
-import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { FormInput } from "../../components/FormInput";
+import { useFormInput } from "../../hooks/useFormInput";
+import { loginStart } from "../../state/auth/actions";
 import {
   FormContainer,
   ImageContainer,
@@ -8,28 +10,33 @@ import {
 } from "./styled";
 
 export const SignIn = () => {
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
-  console.log(errors);
+  const dispatch = useDispatch();
+  const email = useFormInput();
+  const password = useFormInput();
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    dispatch(loginStart(email.inputProps.value, password.inputProps.value));
+
+    email.clearValue();
+    password.clearValue();
+  };
 
   return (
     <SigninContainer>
       <ImageContainer />
-      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer onSubmit={onSubmit}>
         <FormInput
           type="email"
-          name="Email"
-          ref={register({
-            required: true,
-            pattern: /\S+@\S+\.\S+/,
-          })}
+          name="email"
           label="Email"
+          {...email.inputProps}
         />
         <FormInput
-          type="text"
-          name="Password"
-          ref={register({ required: true, pattern: /[a-zA-Z0-9]{6,15}/ })}
+          type="password"
+          name="password"
           label="Password"
+          {...password.inputProps}
         />
 
         <SubmitButton type="submit" value="Sing in" />
