@@ -7,6 +7,11 @@ const shrinkLabel = css`
   top: -14px;
   font-size: 12px;
   color: ${mainColor};
+
+  @media screen and (max-width: 800px) {
+    top: -28px;
+    font-size: 1.3rem;
+  }
 `;
 
 export const GroupContainer = styled.div`
@@ -48,5 +53,9 @@ export const Label = styled.label`
 
   &.shrink-label {
     ${shrinkLabel}
+  }
+
+  @media screen and (max-width: 800px) {
+    font-size: 1.2rem;
   }
 `;

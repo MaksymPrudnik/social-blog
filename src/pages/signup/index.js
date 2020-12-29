@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { FormInput } from "../../components/FormInput";
 import { useFormInput } from "../../hooks/useFormInput";
 import { registerStart } from "../../state/auth/actions";
@@ -11,6 +12,8 @@ import {
 
 export const SignUp = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const email = useFormInput();
   const password = useFormInput();
   const username = useFormInput();
@@ -35,6 +38,8 @@ export const SignUp = () => {
     password.clearValue();
     username.clearValue();
     confirmPassword.clearValue();
+
+    history.push("/");
   };
 
   return (

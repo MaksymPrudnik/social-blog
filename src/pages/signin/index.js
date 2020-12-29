@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { FormInput } from "../../components/FormInput";
 import { useFormInput } from "../../hooks/useFormInput";
 import { loginStart } from "../../state/auth/actions";
@@ -11,6 +12,7 @@ import {
 
 export const SignIn = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const email = useFormInput();
   const password = useFormInput();
   const onSubmit = (event) => {
@@ -20,6 +22,8 @@ export const SignIn = () => {
 
     email.clearValue();
     password.clearValue();
+
+    history.push("/");
   };
 
   return (

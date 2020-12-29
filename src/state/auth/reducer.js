@@ -2,6 +2,7 @@ import { authActionTypes } from "./types";
 
 const initialState = {
   username: null,
+  picture: null,
   isLoading: false,
   error: null,
 };
@@ -18,7 +19,7 @@ export const authReducer = (state = initialState, action) => {
     case authActionTypes.AUTHORIZATION_SUCCESS:
       return {
         ...state,
-        username: action.payload,
+        ...action.payload,
         error: null,
         isLoading: false,
       };
@@ -26,8 +27,14 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         username: null,
+        picture: null,
         error: action.payload,
         isLoading: false,
+      };
+    case authActionTypes.LOG_OUT_SUCCESS:
+      return {
+        ...state,
+        ...initialState,
       };
     default:
       return state;

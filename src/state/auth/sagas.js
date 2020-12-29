@@ -1,29 +1,41 @@
 import { takeLatest, put } from "redux-saga/effects";
+
 import {
   makeGetMeRequest,
   makeLoginRequest,
   makeRegisterRequest,
 } from "../../services/axios";
-import { authorizationSuccess, authorizationFailure } from "./actions";
+
+import {
+  authorizationSuccess,
+  authorizationFailure,
+  logoutSuccess,
+} from "./actions";
 
 import { authActionTypes } from "./types";
 
-export function* loginAsync({ payload: { email, password } }) {
+function* loginAsync({ payload: { email, password } }) {
   try {
     const basicToken = btoa(`${email}:${password}`);
-    const { token, user } = yield makeLoginRequest({ token: basicToken });
+    const {
+      token,
+      user: { username, picture },
+    } = yield makeLoginRequest({ token: basicToken });
     localStorage.setItem("accessToken", token);
-    yield put(authorizationSuccess(user.username));
+    yield put(authorizationSuccess({ username, picture }));
   } catch ({ message }) {
     yield put(authorizationFailure(message));
   }
 }
 
-export function* registerAsync({ payload }) {
+function* registerAsync({ payload }) {
   try {
-    const { token, user } = yield makeRegisterRequest({ data: payload });
+    const {
+      token,
+      user: { username, picture },
+    } = yield makeRegisterRequest({ data: payload });
     localStorage.setItem("accessToken", token);
-    yield put(authorizationSuccess(user.username));
+    yield put(authorizationSuccess({ username, picture }));
   } catch ({ message }) {
     yield put(authorizationFailure(message));
   }
@@ -31,8 +43,17 @@ export function* registerAsync({ payload }) {
 
 function* getMeAsync({ payload }) {
   try {
-    const user = yield makeGetMeRequest({ token: payload });
-    yield put(authorizationSuccess(user.username));
+    const { username, picture } = yield makeGetMeRequest({ token: payload });
+    yield put(authorizationSuccess({ username, picture }));
+  } catch ({ message }) {
+    yield put(authorizationFailure(message));
+  }
+}
+
+function* logoutAsync() {
+  try {
+    localStorage.removeItem("accessToken");
+    yield put(logoutSuccess());
   } catch ({ message }) {
     yield put(authorizationFailure(message));
   }
@@ -48,4 +69,8 @@ export function* registerStart() {
 
 export function* getMeStart() {
   yield takeLatest(authActionTypes.GET_ME_START, getMeAsync);
+}
+
+export function* logout() {
+  yield takeLatest(authActionTypes.LOG_OUT, logoutAsync);
 }

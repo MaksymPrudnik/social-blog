@@ -5,26 +5,36 @@ const instance = axios.create({
   baseURL: serverConfig.host,
 });
 
-export const makeGetRequest = ({ url }) =>
-  instance({
+export const makeGetRequest = ({ url, token }) => {
+  const options = {
     url,
     method: "GET",
-  })
+  };
+  if (token) {
+    options.headers = { Authorization: `Bearer ${token}` };
+  }
+  return instance(options)
     .then(({ data, status }) => (status === 200 ? data : null))
     .catch(({ message }) => {
       throw new Error(message);
     });
+};
 
-export const makePostRequest = ({ url, data }) =>
-  instance({
+export const makePostRequest = ({ url, data, token }) => {
+  const options = {
     url,
     method: "POST",
     data,
-  })
+  };
+  if (token) {
+    options.headers = { Authorization: `Bearer ${token}` };
+  }
+  return instance(options)
     .then(({ data, status }) => (status === 200 ? data : null))
     .catch(({ message }) => {
       throw new Error(message);
     });
+};
 
 export const makeLoginRequest = ({ token }) =>
   instance({

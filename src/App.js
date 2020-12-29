@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Home } from "./pages/home";
 import { SignIn } from "./pages/signin";
 import { SignUp } from "./pages/signup";
-import User from "./components/Routes/User/User";
-import Logout from "./components/Routes/Logout/Logout";
+import { UserPage } from "./pages/user";
+import { CreatePostPage } from "./pages/create-post";
 
 import "./App.css";
 import { Header } from "./components/Header";
@@ -26,25 +26,20 @@ const App = () => {
     }
   }, [accessToken, username, dispatch]);
 
-  return (
+  return isLoading ? (
+    <div className="App-loader-container">
+      <Loader size="3rem" />
+    </div>
+  ) : (
     <div className="App">
       <Router>
         <Header />
-        {isLoading ? <Loader size="3rem" /> : null}
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/signin">
-            <SignIn />
-          </Route>
-          <Route exact path="/register">
-            <SignUp />
-          </Route>
-          <Route path="/user/:username" children={<User />} />
-          <Route path="/logout">
-            <Logout />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/register" component={SignUp} />
+          <Route exact path="/create/post" component={CreatePostPage} />
+          <Route path="/user/:username" component={UserPage} />
         </Switch>
       </Router>
     </div>

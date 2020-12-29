@@ -10,17 +10,25 @@ export const registerStart = (email, password, username) => ({
   payload: { email, password, username },
 });
 
+export const logout = () => ({
+  type: authActionTypes.LOG_OUT,
+});
+
 export const getMeStart = (token) => ({
   type: authActionTypes.GET_ME_START,
   payload: token,
 });
 
-export const authorizationSuccess = (username) => ({
+export const authorizationSuccess = (user) => ({
   type: authActionTypes.AUTHORIZATION_SUCCESS,
-  payload: username,
+  payload: user,
 });
 
 export const authorizationFailure = (message) => ({
   type: authActionTypes.AUTHORIZATION_FAILURE,
   payload: message,
+});
+
+export const logoutSuccess = () => ({
+  type: authActionTypes.LOG_OUT_SUCCESS,
 });

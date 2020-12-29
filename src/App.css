@@ -33,3 +33,11 @@ a:visited {
 a.selected-link {
   color: #3f3fff;
 }
+
+.App-loader-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

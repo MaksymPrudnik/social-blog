@@ -11,7 +11,7 @@ export const Home = () => {
     dispatch(getPostsListStart());
   }, [dispatch]);
 
-  const { isLoading, rows, error } = useSelector((state) => state.post);
+  const { isLoading, rows } = useSelector((state) => state.post);
   return (
     <div>
       {isLoading ? (

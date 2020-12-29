@@ -1,7 +1,11 @@
 import { takeLatest, put } from "redux-saga/effects";
-import { makeGetRequest } from "../../services/axios";
+import { makeGetRequest, makePostRequest } from "../../services/axios";
 import { postActionTypes } from "./types";
-import { getPostsListSuccess, getPostsListFailure } from "./actions";
+import {
+  getPostsListSuccess,
+  getPostsListFailure,
+  createPostFailure,
+} from "./actions";
 
 export function* getPostsListAsync() {
   try {
@@ -14,6 +18,24 @@ export function* getPostsListAsync() {
   }
 }
 
+function* createPostAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const post = yield makePostRequest({
+      url: "/posts",
+      data: payload,
+      token,
+    });
+    console.log(post);
+  } catch ({ message }) {
+    yield put(createPostFailure(message));
+  }
+}
+
 export function* getPostsListStart() {
   yield takeLatest(postActionTypes.GET_POSTS_LIST_START, getPostsListAsync);
+}
+
+export function* createPostStart() {
+  yield takeLatest(postActionTypes.CREATE_POST_START, createPostAsync);
 }
