@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import jsonwebtoken from "jsonwebtoken";
-
-import { getUserAction } from "./state/actions/getUserAction";
-import { loginWithTokenAction } from "./state/actions/authActions";
 
 // Routes
 import { Home } from "./pages/home";
