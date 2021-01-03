@@ -21,6 +21,10 @@ export const PostBody = styled.div`
 export const PostFooter = styled.div`
   display: flex;
   justify-content: space-evenly;
+  width: 80%;
+  align-self: center;
+  border-top: 0.5px solid lightgray;
+  padding-top: 0.5rem;
 `;
 
 export const AuthorImage = styled.img`
@@ -32,14 +36,34 @@ export const AuthorImage = styled.img`
 export const AuthorNickname = styled.div`
   font-size: 1.1rem;
   font-weight: 600;
-  flex-grow: 2;
   text-align: left;
   padding-left: 1rem;
   align-self: center;
 `;
 
+export const CreationDate = styled.div`
+  align-self: center;
+  text-align: left;
+  flex-grow: 2;
+  font-size: 0.9rem;
+  padding-left: 0.5rem;
+  color: gray;
+  font-weight: 250;
+`;
+
 export const PostOptions = styled.div`
-  justify-self: end;
+  display: flex;
+  padding: 0.5rem;
+  cursor: pointer;
+  height: 20px;
+`;
+
+export const OptionDot = styled.div`
+  height: 0.3rem;
+  width: 0.3rem;
+  margin-left: 0.25rem;
+  border-radius: 50%;
+  background-color: #222;
 `;
 
 export const BodyTitle = styled.header`
@@ -52,4 +76,30 @@ export const BodyTitle = styled.header`
 export const BodyText = styled.p`
   padding: 0.5rem 0;
   font-family: monospace;
+  font-size: 1.1rem;
+  text-align: left;
+`;
+
+export const CommentsContainer = styled.div`
+  display: flex;
+`;
+
+export const CommentsCount = styled.div`
+  font-size: 0.9rem;
+  margin-left: 0.3rem;
+`;
+
+export const LikesContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export const LikeHeart = styled.div`
+  color: ${({ isLiked }) => (isLiked ? "red" : "black")};
+  cursor: pointer;
+`;
+
+export const LikesCount = styled.div`
+  font-size: 0.9rem;
+  margin-left: 0.3rem;
 `;
