@@ -1,10 +1,18 @@
 import { takeLatest, put } from "redux-saga/effects";
-import { makeGetRequest, makePostRequest } from "../../services/axios";
+import {
+  makeDeleteRequest,
+  makeGetRequest,
+  makePostRequest,
+  makePutRequest,
+} from "../../services/axios";
 import { postActionTypes } from "./types";
 import {
   getPostsListSuccess,
   getPostsListFailure,
-  createPostFailure,
+  postFailure,
+  addPostToList,
+  updatePostSuccess,
+  deletePostFromList,
 } from "./actions";
 
 export function* getPostsListAsync() {
@@ -26,9 +34,40 @@ function* createPostAsync({ payload }) {
       data: payload,
       token,
     });
-    console.log(post);
+    yield put(addPostToList(post));
   } catch ({ message }) {
-    yield put(createPostFailure(message));
+    yield put(postFailure(message));
+  }
+}
+
+function* updatePostAsync({ payload: { id, body } }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const post = yield makePutRequest({
+      url: `/posts/${id}`,
+      data: body,
+      token,
+    });
+    yield put(updatePostSuccess(post));
+  } catch ({ message }) {
+    yield put(postFailure(message));
+  }
+}
+
+function* deletePostAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const result = yield makeDeleteRequest({
+      url: `/posts/${payload}`,
+      token,
+    });
+    if (result) {
+      yield put(deletePostFromList(payload));
+    } else {
+      throw new Error();
+    }
+  } catch ({ message }) {
+    yield put(postFailure(message || "Error deleting post"));
   }
 }
 
@@ -38,4 +77,12 @@ export function* getPostsListStart() {
 
 export function* createPostStart() {
   yield takeLatest(postActionTypes.CREATE_POST_START, createPostAsync);
+}
+
+export function* updatePostStart() {
+  yield takeLatest(postActionTypes.UPDATE_POST_START, updatePostAsync);
+}
+
+export function* deletePostStart() {
+  yield takeLatest(postActionTypes.DELETE_POST_START, deletePostAsync);
 }

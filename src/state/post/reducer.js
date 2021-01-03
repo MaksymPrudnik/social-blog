@@ -21,13 +21,6 @@ export const postsReducer = (state = initialState, action) => {
         error: null,
         isLoading: false,
       };
-    case postActionTypes.CREATE_POST_SUCCESS:
-      return {
-        ...state,
-        count: state.count + 1,
-        rows: state.rows.push(action.payload),
-        error: null,
-      };
     case postActionTypes.GET_POSTS_LIST_FAILURE:
       return {
         ...state,
@@ -36,7 +29,27 @@ export const postsReducer = (state = initialState, action) => {
         error: action.payload,
         isLoading: false,
       };
-    case postActionTypes.CREATE_POST_FAILURE:
+    case postActionTypes.ADD_POST_TO_LIST:
+      return {
+        ...state,
+        count: state.count + 1,
+        rows: [...state.rows, action.payload],
+        error: null,
+      };
+    case postActionTypes.DELETE_POST_FROM_LIST:
+      return {
+        ...state,
+        count: state.count - 1,
+        rows: state.rows.filter((post) => post.id !== action.payload),
+      };
+    case postActionTypes.UPDATE_POST_SUCCESS:
+      return {
+        ...state,
+        rows: state.rows.map((post) =>
+          post.id === action.payload.id ? action.payload : post
+        ),
+      };
+    case postActionTypes.POST_FAILURE:
       return {
         ...state,
         error: action.payload,

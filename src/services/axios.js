@@ -30,7 +30,38 @@ export const makePostRequest = ({ url, data, token }) => {
     options.headers = { Authorization: `Bearer ${token}` };
   }
   return instance(options)
-    .then(({ data, status }) => (status === 200 ? data : null))
+    .then(({ data, status }) => ([200, 201].includes(status) ? data : null))
+    .catch(({ message }) => {
+      throw new Error(message);
+    });
+};
+
+export const makePutRequest = ({ url, data, token }) => {
+  const options = {
+    url,
+    method: "PUT",
+    data,
+  };
+  if (token) {
+    options.headers = { Authorization: `Bearer ${token}` };
+  }
+  return instance(options)
+    .then(({ data, status }) => ([200, 201].includes(status) ? data : null))
+    .catch(({ message }) => {
+      throw new Error(message);
+    });
+};
+
+export const makeDeleteRequest = ({ url, token }) => {
+  const options = {
+    url,
+    method: "DELETE",
+  };
+  if (token) {
+    options.headers = { Authorization: `Bearer ${token}` };
+  }
+  return instance(options)
+    .then(({ status }) => (status === 204 ? true : null))
     .catch(({ message }) => {
       throw new Error(message);
     });

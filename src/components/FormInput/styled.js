@@ -31,6 +31,7 @@ export const Input = styled.input`
   border-radius: 0;
   border-bottom: 1px solid ${subColor};
   margin: 0;
+  resize: ${({ resize }) => (resize ? resize : null)};
 
   &:focus {
     outline: none;

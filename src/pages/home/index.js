@@ -1,4 +1,4 @@
-import PostList from "../../components/Posts/PostList";
+import { PostList } from "../../components/PostList";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../components/helpers/Loader/Loader";
 import { useEffect } from "react";
@@ -19,7 +19,7 @@ export const Home = () => {
           <Loader size="5rem" />
         </LoaderContainer>
       ) : (
-        <PostList posts={rows} isPending={isLoading} />
+        <PostList posts={rows} />
       )}
     </div>
   );

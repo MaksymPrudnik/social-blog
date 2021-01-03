@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { logout } from "../../state/auth/actions";
+import { openCreatePostModal } from "../../state/post-modal/actions";
+
+import { CreatePostModal } from "../CreatePostModal";
 
 import { AiOutlineLogout, AiFillEdit } from "react-icons/ai";
 
@@ -20,6 +23,7 @@ export const Header = () => {
   const history = useHistory();
   const { pathname } = useLocation();
   const { username, picture } = useSelector((state) => state.auth);
+  const { isOpen } = useSelector((state) => state.postModal);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -27,15 +31,24 @@ export const Header = () => {
     history.push("/");
   };
 
+  const handleCreatePost = () => {
+    if (window.innerWidth > 800) {
+      dispatch(openCreatePostModal());
+    } else {
+      history.push("/create/post");
+    }
+  };
+
   return (
     <HeaderContainer>
+      <CreatePostModal isOpen={isOpen} />
       <LogoLink to="/">Sociaten</LogoLink>
       <AuthContainer isAuthorized={!!username}>
         <NavLink to="/signin">Sign in</NavLink>
         <NavLink to="/register">Sign up</NavLink>
       </AuthContainer>
       <UserNavContainer isAuthorized={!!username}>
-        <NewPostButton onClick={() => history.push("/create/post")}>
+        <NewPostButton onClick={handleCreatePost}>
           <span className="text">New post</span>
           <span className="icon">
             <AiFillEdit />

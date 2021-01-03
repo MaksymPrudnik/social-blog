@@ -7,7 +7,7 @@ import { Home } from "./pages/home";
 import { SignIn } from "./pages/signin";
 import { SignUp } from "./pages/signup";
 import { UserPage } from "./pages/user";
-import { CreatePostPage } from "./pages/create-post";
+import { CreatePostModal } from "./components/CreatePostModal";
 
 import "./App.css";
 import { Header } from "./components/Header";
@@ -38,7 +38,11 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/register" component={SignUp} />
-          <Route exact path="/create/post" component={CreatePostPage} />
+          <Route
+            exact
+            path="/create/post"
+            render={() => <CreatePostModal isOpen={true} />}
+          />
           <Route path="/user/:username" component={UserPage} />
         </Switch>
       </Router>
