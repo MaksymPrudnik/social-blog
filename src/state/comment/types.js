@@ -1,0 +1,4 @@
+export const commentActionTypes = {
+  ADD_POST_COMMENTS: "ADD_POST_COMMENTS",
+  LOAD_POST_COMMENTS_LIST: "LOAD_POST_COMMENTS_LIST",
+};

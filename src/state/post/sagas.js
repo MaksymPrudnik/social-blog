@@ -14,13 +14,21 @@ import {
   updatePostSuccess,
   deletePostFromList,
 } from "./actions";
+import { loadPostCommentsList } from "../comment/actions";
 
 export function* getPostsListAsync() {
   try {
-    const posts = yield makeGetRequest({
+    const { count, rows } = yield makeGetRequest({
       url: "/posts",
     });
-    yield put(getPostsListSuccess(posts));
+    const posts = [];
+    const commentsData = {};
+    rows.forEach(({ id, comments, ...otherProps }) => {
+      posts.push({ id, ...otherProps });
+      commentsData[id] = comments;
+    });
+    yield put(getPostsListSuccess({ count, rows: posts }));
+    yield put(loadPostCommentsList(commentsData));
   } catch ({ message }) {
     yield put(getPostsListFailure(message));
   }
