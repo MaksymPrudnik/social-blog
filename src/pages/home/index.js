@@ -2,16 +2,18 @@ import { PostList } from "../../components/PostList";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../components/helpers/Loader/Loader";
 import { useEffect } from "react";
-import { getPostsListStart } from "../../state/post/actions";
+import { getFeedStart, getPostsListStart } from "../../state/post/actions";
 import { LoaderContainer } from "./styled";
 
-export const Home = () => {
+export const Home = ({ isAuthorized }) => {
+  const { isLoading, rows } = useSelector((state) => state.post);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPostsListStart());
-  }, [dispatch]);
+    console.log(isAuthorized);
+    isAuthorized ? dispatch(getFeedStart()) : dispatch(getPostsListStart());
+  }, [dispatch, isAuthorized]);
 
-  const { isLoading, rows } = useSelector((state) => state.post);
   return (
     <div>
       {isLoading ? (

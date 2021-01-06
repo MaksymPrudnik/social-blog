@@ -6,6 +6,8 @@ import {
   createPostStart,
   updatePostStart,
   deletePostStart,
+  likePostStart,
+  getFeedStart,
 } from "./post/sagas";
 import { getProfileStart } from "./profile/sagas";
 
@@ -16,9 +18,11 @@ export function* rootSaga() {
     call(getMeStart),
     call(logout),
     call(getPostsListStart),
+    call(getFeedStart),
     call(getProfileStart),
     call(createPostStart),
     call(updatePostStart),
+    call(likePostStart),
     call(deletePostStart),
   ]);
 }

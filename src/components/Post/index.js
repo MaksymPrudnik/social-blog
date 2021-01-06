@@ -10,24 +10,22 @@ import {
   PostOptions,
   OptionDot,
   CommentsCount,
-  LikesContainer,
-  LikesCount,
-  LikeHeart,
   CommentsContainer,
   CreationDate,
 } from "./styled";
 
-import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import { LikesButton } from "../LikesButton";
 
 export const Post = ({
   id,
   title,
   text,
   author,
-  likesCount,
   media,
-  comments,
+  likesCount,
+  isLiked,
+  commentsCount,
   createdAt,
 }) => {
   const creationTime = calculateCreationTime(createdAt);
@@ -55,16 +53,11 @@ export const Post = ({
       <PostFooter>
         <CommentsContainer>
           <FaRegComment />
-          {comments?.length ? (
-            <CommentsCount>{comments.length}</CommentsCount>
+          {commentsCount ? (
+            <CommentsCount>{commentsCount}</CommentsCount>
           ) : null}
         </CommentsContainer>
-        <LikesContainer>
-          <LikeHeart isLiked={!!likesCount}>
-            <AiOutlineHeart />
-          </LikeHeart>
-          {likesCount ? <LikesCount>{likesCount}</LikesCount> : null}
-        </LikesContainer>
+        <LikesButton id={id} isLiked={isLiked} likesCount={likesCount} />
       </PostFooter>
     </PostContainer>
   );

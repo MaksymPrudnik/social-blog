@@ -4,6 +4,10 @@ export const getPostsListStart = () => ({
   type: postActionTypes.GET_POSTS_LIST_START,
 });
 
+export const getFeedStart = () => ({
+  type: postActionTypes.GET_FEED_START,
+});
+
 export const getPostsListSuccess = (posts) => ({
   type: postActionTypes.GET_POSTS_LIST_SUCCESS,
   payload: posts,
@@ -36,6 +40,16 @@ export const updatePostStart = (post) => ({
 
 export const updatePostSuccess = (post) => ({
   type: postActionTypes.UPDATE_POST_SUCCESS,
+  payload: post,
+});
+
+export const likePostStart = (id) => ({
+  type: postActionTypes.LIKE_POST_START,
+  payload: id,
+});
+
+export const likePostSuccess = (post) => ({
+  type: postActionTypes.LIKE_POST_SUCCESS,
   payload: post,
 });
 

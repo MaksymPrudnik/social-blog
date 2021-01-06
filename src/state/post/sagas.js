@@ -13,13 +13,34 @@ import {
   addPostToList,
   updatePostSuccess,
   deletePostFromList,
+  likePostSuccess,
 } from "./actions";
 import { loadPostCommentsList } from "../comment/actions";
 
-export function* getPostsListAsync() {
+function* getPostsListAsync() {
   try {
     const { count, rows } = yield makeGetRequest({
       url: "/posts",
+    });
+    const posts = [];
+    const commentsData = {};
+    rows.forEach(({ id, comments, ...otherProps }) => {
+      posts.push({ id, ...otherProps });
+      commentsData[id] = comments;
+    });
+    yield put(getPostsListSuccess({ count, rows: posts }));
+    yield put(loadPostCommentsList(commentsData));
+  } catch ({ message }) {
+    yield put(getPostsListFailure(message));
+  }
+}
+
+function* getFeedAsync() {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const { count, rows } = yield makeGetRequest({
+      url: "/posts/feed",
+      token,
     });
     const posts = [];
     const commentsData = {};
@@ -62,6 +83,19 @@ function* updatePostAsync({ payload: { id, body } }) {
   }
 }
 
+function* likePostAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const { comments, ...post } = yield makePutRequest({
+      url: `posts/${payload}/like`,
+      token,
+    });
+    yield put(likePostSuccess(post));
+  } catch ({ message }) {
+    yield put(postFailure(message));
+  }
+}
+
 function* deletePostAsync({ payload }) {
   try {
     const token = localStorage.getItem("accessToken");
@@ -83,12 +117,20 @@ export function* getPostsListStart() {
   yield takeLatest(postActionTypes.GET_POSTS_LIST_START, getPostsListAsync);
 }
 
+export function* getFeedStart() {
+  yield takeLatest(postActionTypes.GET_FEED_START, getFeedAsync);
+}
+
 export function* createPostStart() {
   yield takeLatest(postActionTypes.CREATE_POST_START, createPostAsync);
 }
 
 export function* updatePostStart() {
   yield takeLatest(postActionTypes.UPDATE_POST_START, updatePostAsync);
+}
+
+export function* likePostStart() {
+  yield takeLatest(postActionTypes.LIKE_POST_START, likePostAsync);
 }
 
 export function* deletePostStart() {

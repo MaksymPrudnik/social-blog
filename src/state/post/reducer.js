@@ -10,6 +10,7 @@ const initialState = {
 export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case postActionTypes.GET_POSTS_LIST_START:
+    case postActionTypes.GET_FEED_START:
       return {
         ...state,
         isLoading: true,
@@ -25,7 +26,7 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         count: 0,
-        rows: null,
+        rows: [],
         error: action.payload,
         isLoading: false,
       };
@@ -42,6 +43,7 @@ export const postsReducer = (state = initialState, action) => {
         count: state.count - 1,
         rows: state.rows.filter((post) => post.id !== action.payload),
       };
+    case postActionTypes.LIKE_POST_SUCCESS:
     case postActionTypes.UPDATE_POST_SUCCESS:
       return {
         ...state,

@@ -3,7 +3,7 @@ import { authActionTypes } from "./types";
 const initialState = {
   username: null,
   picture: null,
-  isLoading: false,
+  isLoading: true,
   error: null,
 };
 

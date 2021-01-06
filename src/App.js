@@ -12,7 +12,7 @@ import { CreatePostModal } from "./components/CreatePostModal";
 import "./App.css";
 import { Header } from "./components/Header";
 import { getMeStart } from "./state/auth/actions";
-import Loader from "./components/helpers/Loader/Loader";
+import { SplashScreen } from "./components/SplashScreen";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,15 +27,17 @@ const App = () => {
   }, [accessToken, username, dispatch]);
 
   return isLoading ? (
-    <div className="App-loader-container">
-      <Loader size="3rem" />
-    </div>
+    <SplashScreen />
   ) : (
     <div className="App">
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={() => <Home isAuthorized={!!username} />}
+          />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/register" component={SignUp} />
           <Route
