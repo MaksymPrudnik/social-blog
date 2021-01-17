@@ -43,8 +43,10 @@ function* registerAsync({ payload }) {
 
 function* getMeAsync({ payload }) {
   try {
-    const { username, picture } = yield makeGetMeRequest({ token: payload });
-    yield put(authorizationSuccess({ username, picture }));
+    const { id, username, picture } = yield makeGetMeRequest({
+      token: payload,
+    });
+    yield put(authorizationSuccess({ id, username, picture }));
   } catch ({ message }) {
     yield put(authorizationFailure(message));
   }

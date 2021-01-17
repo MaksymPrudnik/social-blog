@@ -9,3 +9,8 @@ export const loadPostCommentsList = (commentsData) => ({
   type: commentActionTypes.LOAD_POST_COMMENTS_LIST,
   payload: commentsData,
 });
+
+export const loadCurrentPostComments = (comments) => ({
+  type: commentActionTypes.LOAD_CURRENT_POST_COMMENTS,
+  payload: comments,
+});

@@ -29,10 +29,11 @@ export const NavLink = styled(Link)`
 
 export const NavImage = styled.img`
   display: block;
-  max-height: 3rem;
-  width: auto;
+  height: 2rem;
+  width: 2rem;
   border-radius: 50%;
-  padding: 0 1rem;
+  margin: 0 1rem;
+  object-fit: cover;
   cursor: pointer;
 `;
 

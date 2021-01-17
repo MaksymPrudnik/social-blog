@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,11 +11,14 @@ import { CreatePostModal } from "./components/CreatePostModal";
 
 import "./App.css";
 import { Header } from "./components/Header";
-import { getMeStart } from "./state/auth/actions";
+import { getMeStart, unsetLoading } from "./state/auth/actions";
 import { SplashScreen } from "./components/SplashScreen";
+import { PostPage } from "./pages/post";
 
 const App = () => {
   const dispatch = useDispatch();
+
+  const [isSplashLoading, setIsSplashLoading] = useState(true);
 
   const { username, isLoading } = useSelector((state) => state.auth);
   const accessToken = localStorage.getItem("accessToken");
@@ -23,10 +26,18 @@ const App = () => {
   useEffect(() => {
     if (accessToken && !username) {
       dispatch(getMeStart(accessToken));
+    } else {
+      dispatch(unsetLoading());
     }
   }, [accessToken, username, dispatch]);
 
-  return isLoading ? (
+  useEffect(() => {
+    if (!isLoading) {
+      setIsSplashLoading(false);
+    }
+  }, [isLoading]);
+
+  return isSplashLoading ? (
     <SplashScreen />
   ) : (
     <div className="App">
@@ -46,6 +57,7 @@ const App = () => {
             render={() => <CreatePostModal isOpen={true} />}
           />
           <Route path="/user/:username" component={UserPage} />
+          <Route path="/post/:id" component={PostPage} />
         </Switch>
       </Router>
     </div>

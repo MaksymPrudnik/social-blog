@@ -2,7 +2,8 @@ import { postActionTypes } from "./types";
 
 const initialState = {
   count: 0,
-  rows: [],
+  rows: null,
+  currentPost: null,
   error: null,
   isLoading: false,
 };
@@ -11,6 +12,7 @@ export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case postActionTypes.GET_POSTS_LIST_START:
     case postActionTypes.GET_FEED_START:
+    case postActionTypes.GET_POST_START:
       return {
         ...state,
         isLoading: true,
@@ -34,8 +36,13 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         count: state.count + 1,
-        rows: [...state.rows, action.payload],
+        rows: [action.payload, ...state.rows],
         error: null,
+      };
+    case postActionTypes.GET_POST_SUCCESS:
+      return {
+        ...state,
+        currentPost: action.payload,
       };
     case postActionTypes.DELETE_POST_FROM_LIST:
       return {

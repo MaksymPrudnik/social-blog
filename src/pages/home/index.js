@@ -10,7 +10,6 @@ export const Home = ({ isAuthorized }) => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(isAuthorized);
     isAuthorized ? dispatch(getFeedStart()) : dispatch(getPostsListStart());
   }, [dispatch, isAuthorized]);
 

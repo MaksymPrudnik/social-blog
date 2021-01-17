@@ -14,8 +14,12 @@ import {
   updatePostSuccess,
   deletePostFromList,
   likePostSuccess,
+  getPostSuccess,
 } from "./actions";
-import { loadPostCommentsList } from "../comment/actions";
+import {
+  loadCurrentPostComments,
+  loadPostCommentsList,
+} from "../comment/actions";
 
 function* getPostsListAsync() {
   try {
@@ -52,6 +56,20 @@ function* getFeedAsync() {
     yield put(loadPostCommentsList(commentsData));
   } catch ({ message }) {
     yield put(getPostsListFailure(message));
+  }
+}
+
+function* getPostAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const { id, comments, ...post } = yield makeGetRequest({
+      url: `/posts/${payload.id}`,
+      token,
+    });
+    yield put(getPostSuccess({ id, post }));
+    yield put(loadCurrentPostComments(comments));
+  } catch ({ message }) {
+    yield put(postFailure(message));
   }
 }
 
@@ -119,6 +137,10 @@ export function* getPostsListStart() {
 
 export function* getFeedStart() {
   yield takeLatest(postActionTypes.GET_FEED_START, getFeedAsync);
+}
+
+export function* getPostStart() {
+  yield takeLatest(postActionTypes.GET_POST_START, getPostAsync);
 }
 
 export function* createPostStart() {

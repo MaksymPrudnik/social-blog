@@ -2,7 +2,7 @@ import { Post } from "../Post";
 import { PostListContainer } from "./styled";
 
 export const PostList = ({ posts }) =>
-  posts.length ? (
+  posts?.length ? (
     <PostListContainer>
       {posts.map((postProps) => (
         <Post {...postProps} key={postProps.id} />

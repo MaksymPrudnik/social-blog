@@ -2,6 +2,7 @@ import { commentActionTypes } from "./types";
 
 const initialState = {
   commentsByPost: {},
+  currentPostComments: null,
   isLoading: false,
   error: null,
 };
@@ -20,6 +21,11 @@ export const commentsReducer = (state = initialState, action) => {
           ...state.commentsByPost,
           [action.payload.id]: action.payload.comments,
         },
+      };
+    case commentActionTypes.LOAD_CURRENT_POST_COMMENTS:
+      return {
+        ...state,
+        currentPostComments: action.payload,
       };
     default:
       return state;

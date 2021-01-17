@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormInput } from "../../components/FormInput";
 import { useFormInput } from "../../hooks/useFormInput";
@@ -12,18 +13,27 @@ import {
 
 export const SignIn = () => {
   const dispatch = useDispatch();
+  const { username } = useSelector((state) => state.auth);
+
   const history = useHistory();
   const email = useFormInput();
   const password = useFormInput();
+
+  // const clearInputs = () => {
+  //   email.clearValue();
+  //   password.clearValue();
+  // };
+
+  useEffect(() => {
+    if (username) {
+      history.push("/");
+    }
+  }, [username, history]);
+
   const onSubmit = (event) => {
     event.preventDefault();
 
     dispatch(loginStart(email.inputProps.value, password.inputProps.value));
-
-    email.clearValue();
-    password.clearValue();
-
-    history.push("/");
   };
 
   return (

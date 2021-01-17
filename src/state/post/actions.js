@@ -18,6 +18,16 @@ export const getPostsListFailure = (message) => ({
   payload: message,
 });
 
+export const getPostStart = (id) => ({
+  type: postActionTypes.GET_POST_START,
+  payload: id,
+});
+
+export const getPostSuccess = (post) => ({
+  type: postActionTypes.GET_POST_SUCCESS,
+  payload: post,
+});
+
 export const createPostStart = (data) => ({
   type: postActionTypes.CREATE_POST_START,
   payload: data,

@@ -1,5 +1,9 @@
 import { authActionTypes } from "./types";
 
+export const unsetLoading = () => ({
+  type: authActionTypes.UNSET_LOADING,
+});
+
 export const loginStart = (email, password) => ({
   type: authActionTypes.LOGIN_START,
   payload: { email, password },

@@ -16,6 +16,7 @@ import {
 
 import { FaRegComment } from "react-icons/fa";
 import { LikesButton } from "../LikesButton";
+import { useSelector } from "react-redux";
 
 export const Post = ({
   id,
@@ -28,12 +29,14 @@ export const Post = ({
   commentsCount,
   createdAt,
 }) => {
+  const currentUser = useSelector((state) => state.auth);
+  const authorData = typeof author === "string" ? { ...currentUser } : author;
   const creationTime = calculateCreationTime(createdAt);
   return (
     <PostContainer>
       <PostHeader>
-        <AuthorImage src={author.picture} alt="author picture" />
-        <AuthorNickname>@{author.username}</AuthorNickname>
+        <AuthorImage src={authorData.picture} alt="author picture" />
+        <AuthorNickname>@{authorData.username}</AuthorNickname>
         <CreationDate> - {creationTime}</CreationDate>
         <PostOptions>
           <OptionDot />
@@ -72,20 +75,30 @@ const calculateCreationTime = (date) => {
   ) {
     if (creationDate.getDate() === currentDate.getDate()) {
       const hoursDifference = currentDate.getHours() - creationDate.getHours();
-      if (hoursDifference === 0) {
-        const minutesDifference =
-          currentDate.getMinutes - creationDate.getMinutes();
+      const minutesDifference =
+        hoursDifference === 0
+          ? currentDate.getMinutes() - creationDate.getMinutes()
+          : 60 - creationDate.getMinutes() + currentDate.getMinutes();
+      if (
+        hoursDifference === 0 ||
+        (hoursDifference === 1 && minutesDifference < 60)
+      ) {
         return minutesDifference
           ? `${minutesDifference} minutes ago`
           : "Less then a minute ago";
       }
-      return `${hoursDifference} hours ago`;
+      return `${hoursDifference} hour${hoursDifference > 1 ? "s" : ""} ago`;
     } else if (creationDate.getDate() === currentDate.getDate() - 1) {
       const hoursDifference =
         currentDate.getHours() + 24 - creationDate.getHours();
       return hoursDifference < 24
-        ? `${hoursDifference} hours ago`
+        ? `${hoursDifference} hour${hoursDifference > 1 ? "s" : ""} ago`
         : `Yesterday at ${creationDate.getTime()}`;
+    } else {
+      const daysDifference = currentDate.getDate() - creationDate.getDate();
+      return daysDifference / 7 < 2
+        ? `${daysDifference} days ago`
+        : `${(daysDifference / 7).toFixed(0)} weeks ago`;
     }
   } else {
     return creationDate.toLocaleDateString();

@@ -28,9 +28,10 @@ export const PostFooter = styled.div`
 `;
 
 export const AuthorImage = styled.img`
-  max-width: 3rem;
-  max-height: 3rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const AuthorNickname = styled.div`
