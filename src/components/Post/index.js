@@ -17,6 +17,9 @@ import {
 import { FaRegComment } from "react-icons/fa";
 import { LikesButton } from "../LikesButton";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { PostOptionsDropdown } from "../PostOptionsDropdown";
+import { useHistory } from "react-router-dom";
 
 export const Post = ({
   id,
@@ -29,20 +32,41 @@ export const Post = ({
   commentsCount,
   createdAt,
 }) => {
+  const history = useHistory();
+
   const currentUser = useSelector((state) => state.auth);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+
   const authorData = typeof author === "string" ? { ...currentUser } : author;
+
   const creationTime = calculateCreationTime(createdAt);
+
+  const handlePostClick = ({ target }) => {
+    const reservedId = ["post-options", "like-button"];
+    if (isOptionsOpen) {
+      setIsOptionsOpen(false);
+    } else if (!reservedId.includes(target.id)) {
+      history.push(`/post/${id}`);
+    }
+  };
+
   return (
-    <PostContainer>
+    <PostContainer onClick={handlePostClick}>
       <PostHeader>
         <AuthorImage src={authorData.picture} alt="author picture" />
         <AuthorNickname>@{authorData.username}</AuthorNickname>
         <CreationDate> - {creationTime}</CreationDate>
-        <PostOptions>
+        <PostOptions
+          onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+          id="post-options"
+        >
           <OptionDot />
           <OptionDot />
           <OptionDot />
         </PostOptions>
+        {isOptionsOpen ? (
+          <PostOptionsDropdown id={id} isMyPost={false} />
+        ) : null}
       </PostHeader>
       <PostBody>
         <BodyTitle>{title}</BodyTitle>

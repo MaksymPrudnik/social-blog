@@ -11,6 +11,7 @@ export const PostContainer = styled.div`
 export const PostHeader = styled.div`
   width: 100%;
   display: flex;
+  position: relative;
 `;
 
 export const PostBody = styled.div`
