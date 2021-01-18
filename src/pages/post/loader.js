@@ -51,6 +51,7 @@ export const PostLoader = () => (
         ry="0.35rem"
         width="40rem"
         height="0.7rem"
+        key={i}
       />
     ))}
 
@@ -82,6 +83,7 @@ export const PostLoader = () => (
         ry="1.5rem"
         width="3rem"
         height="3rem"
+        key={i}
       />
     ))}
     {new Array(3).fill(" ").map((_, i) => (
@@ -92,6 +94,7 @@ export const PostLoader = () => (
         ry="0.35rem"
         width="4rem"
         height="0.7rem"
+        key={i}
       />
     ))}
     {new Array(3).fill(" ").map((_, i) => (
@@ -102,6 +105,7 @@ export const PostLoader = () => (
         ry="0.25rem"
         width="32rem"
         height="0.5rem"
+        key={i}
       />
     ))}
     {new Array(3).fill(" ").map((_, i) => (
@@ -112,6 +116,7 @@ export const PostLoader = () => (
         ry="0.25rem"
         width="31rem"
         height="0.5rem"
+        key={i}
       />
     ))}
   </ContentLoader>

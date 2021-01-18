@@ -63,7 +63,7 @@ function* getPostAsync({ payload }) {
   try {
     const token = localStorage.getItem("accessToken");
     const { id, comments, ...post } = yield makeGetRequest({
-      url: `/posts/${payload.id}`,
+      url: `/posts/${payload}`,
       token,
     });
     yield put(getPostSuccess({ id, post }));

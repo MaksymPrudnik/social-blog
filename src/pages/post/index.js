@@ -10,7 +10,7 @@ export const PostPage = () => {
   const { id } = useParams();
   const [isPostLoaded, setIsPostLoaded] = useState(false);
 
-  const { isLoading, error, currentPost } = useSelector((state) => state.post);
+  const { error, currentPost } = useSelector((state) => state.post);
   const { currentPostComments } = useSelector((state) => state.comment);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const PostPage = () => {
   }, [currentPost]);
 
   console.log(currentPostComments);
-  console.log("isLoading, error, isPostLoaded", isLoading, error, isPostLoaded);
+  console.log(error, id);
   return (
     <div
       style={{
@@ -35,7 +35,11 @@ export const PostPage = () => {
         marginTop: "3rem",
       }}
     >
-      {isPostLoaded ? <Post {...currentPost} /> : <PostLoader />}
+      {isPostLoaded ? (
+        <Post {...currentPost.post} id={currentPost.id} isLinkDisabled={true} />
+      ) : (
+        <PostLoader />
+      )}
     </div>
   );
 };

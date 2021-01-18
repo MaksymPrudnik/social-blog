@@ -31,6 +31,7 @@ export const Post = ({
   isLiked,
   commentsCount,
   createdAt,
+  isLinkDisabled,
 }) => {
   const history = useHistory();
 
@@ -45,7 +46,7 @@ export const Post = ({
     const reservedId = ["post-options", "like-button"];
     if (isOptionsOpen) {
       setIsOptionsOpen(false);
-    } else if (!reservedId.includes(target.id)) {
+    } else if (!reservedId.includes(target.id) && !isLinkDisabled) {
       history.push(`/post/${id}`);
     }
   };
