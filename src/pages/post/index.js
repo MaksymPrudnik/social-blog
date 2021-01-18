@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { CommentList } from "../../components/CommentsList";
 import { Post } from "../../components/Post";
 import { getPostStart } from "../../state/post/actions";
 import { PostLoader } from "./loader";
+import { PostPageContainer } from "./styled";
 
 export const PostPage = () => {
   const dispatch = useDispatch();
@@ -24,22 +26,18 @@ export const PostPage = () => {
     }
   }, [currentPost]);
 
-  console.log(currentPostComments);
-  console.log(error, id);
-  return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: 800,
-        margin: "0 auto",
-        marginTop: "3rem",
-      }}
-    >
-      {isPostLoaded ? (
-        <Post {...currentPost.post} id={currentPost.id} isLinkDisabled={true} />
-      ) : (
-        <PostLoader />
-      )}
-    </div>
+  if (error) {
+    console.log(error);
+  }
+
+  return isPostLoaded ? (
+    <PostPageContainer>
+      <Post {...currentPost.post} id={currentPost.id} isLinkDisabled={true} />
+      <CommentList comments={currentPostComments} />
+    </PostPageContainer>
+  ) : (
+    <PostPageContainer>
+      <PostLoader />
+    </PostPageContainer>
   );
 };

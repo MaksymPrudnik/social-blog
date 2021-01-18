@@ -84,6 +84,7 @@ export const BodyText = styled.p`
 
 export const CommentsContainer = styled.div`
   display: flex;
+  cursor: ${({ isLinkDisabled }) => (isLinkDisabled ? "unset" : "pointer")};
 `;
 
 export const CommentsCount = styled.div`

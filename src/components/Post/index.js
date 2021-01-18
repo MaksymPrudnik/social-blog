@@ -79,7 +79,7 @@ export const Post = ({
         </div>
       </PostBody>
       <PostFooter>
-        <CommentsContainer>
+        <CommentsContainer isLinkDisabled={isLinkDisabled}>
           <FaRegComment />
           {commentsCount ? (
             <CommentsCount>{commentsCount}</CommentsCount>
@@ -91,7 +91,7 @@ export const Post = ({
   );
 };
 
-const calculateCreationTime = (date) => {
+export const calculateCreationTime = (date) => {
   const creationDate = new Date(date);
   const currentDate = new Date();
   if (
@@ -118,7 +118,9 @@ const calculateCreationTime = (date) => {
         currentDate.getHours() + 24 - creationDate.getHours();
       return hoursDifference < 24
         ? `${hoursDifference} hour${hoursDifference > 1 ? "s" : ""} ago`
-        : `Yesterday at ${creationDate.getTime()}`;
+        : `Yesterday at ${creationDate.getHours()}:${String(
+            creationDate.getMinutes()
+          ).padStart(2, 0)}`;
     } else {
       const daysDifference = currentDate.getDate() - creationDate.getDate();
       return daysDifference / 7 < 2
