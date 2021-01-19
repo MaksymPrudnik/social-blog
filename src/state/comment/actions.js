@@ -14,3 +14,18 @@ export const loadCurrentPostComments = (comments) => ({
   type: commentActionTypes.LOAD_CURRENT_POST_COMMENTS,
   payload: comments,
 });
+
+export const commentPostStart = (id, text) => ({
+  type: commentActionTypes.COMMENT_POST_START,
+  payload: { id, text },
+});
+
+export const addCommentToList = (id, comment) => ({
+  type: commentActionTypes.ADD_COMMENT_TO_LIST,
+  payload: { id, comment },
+});
+
+export const commentFailure = (error) => ({
+  type: commentActionTypes.COMMENT_FAILURE,
+  payload: error,
+});

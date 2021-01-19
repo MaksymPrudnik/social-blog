@@ -27,6 +27,22 @@ export const commentsReducer = (state = initialState, action) => {
         ...state,
         currentPostComments: action.payload,
       };
+    case commentActionTypes.ADD_COMMENT_TO_LIST:
+      return {
+        ...state,
+        commentsByPost: {
+          ...state.commentsByPost,
+          [action.payload.id]: [
+            action.payload.comment,
+            ...state.commentsByPost[action.payload.id],
+          ],
+        },
+      };
+    case commentActionTypes.COMMENT_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
