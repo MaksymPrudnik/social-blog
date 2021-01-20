@@ -43,10 +43,13 @@ export const Post = ({
   const creationTime = calculateCreationTime(createdAt);
 
   const handlePostClick = ({ target }) => {
-    const reservedId = ["post-options", "like-button"];
     if (isOptionsOpen) {
       setIsOptionsOpen(false);
-    } else if (!reservedId.includes(target.id) && !isLinkDisabled) {
+    }
+  };
+
+  const handleCommentsClick = ({ target }) => {
+    if (!isLinkDisabled) {
       history.push(`/post/${id}`);
     }
   };
@@ -57,10 +60,7 @@ export const Post = ({
         <AuthorImage src={authorData.picture} alt="author picture" />
         <AuthorNickname>@{authorData.username}</AuthorNickname>
         <CreationDate> - {creationTime}</CreationDate>
-        <PostOptions
-          onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-          id="post-options"
-        >
+        <PostOptions onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
           <OptionDot />
           <OptionDot />
           <OptionDot />
@@ -79,7 +79,10 @@ export const Post = ({
         </div>
       </PostBody>
       <PostFooter>
-        <CommentsContainer isLinkDisabled={isLinkDisabled}>
+        <CommentsContainer
+          isLinkDisabled={isLinkDisabled}
+          onClick={handleCommentsClick}
+        >
           <FaRegComment />
           {commentsCount ? (
             <CommentsCount>{commentsCount}</CommentsCount>

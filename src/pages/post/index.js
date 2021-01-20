@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { AddCommentField } from "../../components/AddCommentField";
 import { CommentList } from "../../components/CommentsList";
 import { Post } from "../../components/Post";
 import { getPostStart } from "../../state/post/actions";
@@ -16,7 +17,6 @@ export const PostPage = () => {
   const { currentPostComments } = useSelector((state) => state.comment);
 
   useEffect(() => {
-    console.log("get post start");
     dispatch(getPostStart(id));
   }, [dispatch, id]);
 
@@ -33,6 +33,7 @@ export const PostPage = () => {
   return isPostLoaded ? (
     <PostPageContainer>
       <Post {...currentPost.post} id={currentPost.id} isLinkDisabled={true} />
+      <AddCommentField />
       <CommentList comments={currentPostComments} />
     </PostPageContainer>
   ) : (
