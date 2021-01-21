@@ -5,12 +5,22 @@ export const getProfileStart = (username) => ({
   payload: username,
 });
 
+export const getProfilePostsStart = (id) => ({
+  type: profileActionTypes.GET_PROFILE_POSTS_START,
+  payload: id,
+});
+
+export const getProfilePostsSuccess = (posts) => ({
+  type: profileActionTypes.GET_PROFILE_POSTS_SUCCESS,
+  payload: posts,
+});
+
 export const getProfileSuccess = (profile) => ({
   type: profileActionTypes.GET_PROFILE_SUCCESS,
   payload: profile,
 });
 
-export const getProfileFailure = (message) => ({
-  type: profileActionTypes.GET_PROFILE_FAILURE,
+export const profileFailure = (message) => ({
+  type: profileActionTypes.PROFILE_FAILURE,
   payload: message,
 });

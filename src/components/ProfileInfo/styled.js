@@ -18,7 +18,8 @@ export const ProfileImageContainer = styled.div`
 
 export const ProfileImage = styled.img`
   max-width: 20vh;
-  height: auto;
+  height: 20vh;
+  object-fit: cover;
   border-radius: 50%;
   border: 2px solid white;
   position: absolute;

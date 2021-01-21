@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/helpers/Loader/Loader";
+import { PostList } from "../../components/PostList";
 import { ProfileInfo } from "../../components/ProfileInfo";
 import { useCheckAuth } from "../../hooks/useCheckAuth";
 import { getProfileStart } from "../../state/profile/actions";
@@ -14,7 +15,9 @@ export const UserPage = ({
   useCheckAuth();
 
   const dispatch = useDispatch();
-  const { profile, isLoading, error } = useSelector((state) => state.profile);
+  const { profile, posts, isLoading, error } = useSelector(
+    (state) => state.profile
+  );
 
   const isMe = username === "me";
 
@@ -22,14 +25,19 @@ export const UserPage = ({
     dispatch(getProfileStart(username));
   }, [dispatch, username]);
 
+  if (error) {
+    console.log(error);
+    console.log(posts);
+  }
+
   return isLoading || (!profile && !error) ? (
     <div>
       <Loader size="3rem" />
     </div>
   ) : (
     <ProfilePageContainer>
-      {profile ? <ProfileInfo {...profile} isMe={isMe} /> : null}
-      <div>{!!error ? error : null}</div>
+      <ProfileInfo {...profile} isMe={isMe} />
+      <PostList posts={[]} />
     </ProfilePageContainer>
   );
 };

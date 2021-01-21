@@ -3,7 +3,11 @@ import { makeGetRequest } from "../../services/axios";
 
 import { profileActionTypes } from "./types";
 
-import { getProfileFailure, getProfileSuccess } from "./actions";
+import {
+  profileFailure,
+  getProfileSuccess,
+  getProfilePostsSuccess,
+} from "./actions";
 
 function* getProfileAsync({ payload }) {
   try {
@@ -14,10 +18,31 @@ function* getProfileAsync({ payload }) {
     const profile = yield makeGetRequest(requestParams);
     yield put(getProfileSuccess(profile));
   } catch ({ message }) {
-    yield put(getProfileFailure(message));
+    yield put(profileFailure(message));
+  }
+}
+
+function* getProfilePostsAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const requestParams = {
+      url: `/posts/${payload}`,
+      token,
+    };
+    const { rows } = yield makeGetRequest(requestParams);
+    yield put(getProfilePostsSuccess(rows));
+  } catch ({ message }) {
+    yield put(profileFailure(message));
   }
 }
 
 export function* getProfileStart() {
   yield takeLatest(profileActionTypes.GET_PROFILE_START, getProfileAsync);
+}
+
+export function* getProfilePostsStart() {
+  yield takeLatest(
+    profileActionTypes.GET_PROFILE_POSTS_START,
+    getProfilePostsAsync
+  );
 }

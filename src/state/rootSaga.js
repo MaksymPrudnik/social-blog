@@ -11,7 +11,7 @@ import {
   getFeedStart,
   getPostStart,
 } from "./post/sagas";
-import { getProfileStart } from "./profile/sagas";
+import { getProfilePostsStart, getProfileStart } from "./profile/sagas";
 
 export function* rootSaga() {
   yield all([
@@ -24,6 +24,7 @@ export function* rootSaga() {
     call(getFeedStart),
     call(getPostStart),
     call(createPostStart),
+    call(getProfilePostsStart),
     call(updatePostStart),
     call(likePostStart),
     call(deletePostStart),
