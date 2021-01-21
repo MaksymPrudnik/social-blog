@@ -15,25 +15,40 @@ export const AuthorPicture = styled.img`
   object-fit: cover;
 `;
 
+export const CommentForm = styled.div`
+  display: flex;
+  padding: 0.2rem;
+  border: 1px solid lightgray;
+  border-radius: 0.5rem;
+  margin-left: 0.5rem;
+  width: 100%;
+`
+
 export const CommentInput = styled.input`
   flex-grow: 2;
-  margin-left: 0.5rem;
+  text-align: left;
+  border: none;
+  font-size: 1.1rem;
+  min-width: 150px;
   padding-left: 0.5rem;
-  border-radius: 0.5rem 0 0 0.5rem;
-  border: 1px solid lightgrey;
-  border-right: none;
-  height: 2rem;
-  font-size: 1rem;
+  overflow-wrap: break-word;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
-export const CommentButton = styled.div`
+export const CommentButton = styled.button`
   padding: 0 0.5rem;
-  height: 2rem;
-  border-radius: 0 0.5rem 0.5rem 0;
-  border: 1px solid lightgrey;
-  border-left: none;
-  background-color: black;
-  color: whitesmoke;
+  border: none;
+  color: #01011b;
+  background-color: transparent;
   display: flex;
   align-items: center;
+  font-weight: 550;
+  cursor: pointer;
+
+  &:hover {
+    color: #484874;
+  }
 `;

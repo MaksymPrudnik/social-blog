@@ -33,7 +33,7 @@ export const PostPage = () => {
   return isPostLoaded ? (
     <PostPageContainer>
       <Post {...currentPost.post} id={currentPost.id} isLinkDisabled={true} />
-      <AddCommentField />
+      <AddCommentField id={currentPost.id} />
       <CommentList comments={currentPostComments} />
     </PostPageContainer>
   ) : (

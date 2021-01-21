@@ -17,7 +17,7 @@ export const loadCurrentPostComments = (comments) => ({
 
 export const commentPostStart = (id, text) => ({
   type: commentActionTypes.COMMENT_POST_START,
-  payload: { id, text },
+  payload: { document: id, text },
 });
 
 export const addCommentToList = (id, comment) => ({
