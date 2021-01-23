@@ -1,6 +1,7 @@
 import {
   DateContainer,
   EmailContainer,
+  InfoInNumbersContainer,
   ProfileImage,
   ProfileImageContainer,
   ProfileInfoContainer,
@@ -12,7 +13,9 @@ export const ProfileInfo = ({
   email,
   picture,
   wallpapper,
+  friends,
   createdAt,
+  postCount,
 }) => (
   <ProfileInfoContainer>
     <ProfileImageContainer wallpapper={wallpapper}>
@@ -21,5 +24,9 @@ export const ProfileInfo = ({
     <UsernameContainer>@{username}</UsernameContainer>
     <EmailContainer>{email ? email : null}</EmailContainer>
     <DateContainer>Member since {createdAt.split("T")[0]}</DateContainer>
+    <InfoInNumbersContainer>
+      <div>{`${postCount} Post${postCount > 1 ? "s" : ""}`}</div>
+      <div>{`${friends.length} Friend${friends.length !== 1 ? "s" : ""}`}</div>
+    </InfoInNumbersContainer>
   </ProfileInfoContainer>
 );

@@ -22,12 +22,11 @@ export const UserPage = ({
     (state) => state.profile
   );
 
-  const isMe = username === "me";
-
+  const profileUsername = profile?.isMe ? "me" : username;
   useEffect(() => {
-    dispatch(getProfileStart(username));
+    dispatch(getProfileStart(profileUsername));
     dispatch(getProfilePostsStart(user));
-  }, [dispatch, username, user]);
+  }, [dispatch, user, profileUsername]);
 
   if (error) {
     console.log(error);
@@ -39,7 +38,7 @@ export const UserPage = ({
     </div>
   ) : (
     <ProfilePageContainer>
-      <ProfileInfo {...profile} isMe={isMe} />
+      <ProfileInfo {...profile} isMe={profile.isMe} postCount={posts.length} />
       <PostList posts={posts} />
     </ProfilePageContainer>
   );

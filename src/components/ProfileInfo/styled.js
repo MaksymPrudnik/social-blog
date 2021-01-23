@@ -44,3 +44,15 @@ export const DateContainer = styled.div`
   font-weight: 250;
   color: grey;
 `;
+
+export const InfoInNumbersContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+`;
+
+export const PostCountContainer = styled.div``;
+
+export const FriendsCountContainer = styled.div``;

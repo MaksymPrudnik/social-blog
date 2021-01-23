@@ -11,7 +11,11 @@ import {
 
 function* getProfileAsync({ payload }) {
   try {
-    const requestParams = { url: `/users/${payload}` };
+    const token = localStorage.getItem("accessToken");
+    const requestParams = {
+      url: `/users/${payload}`,
+      token,
+    };
     if (payload === "me") {
       requestParams.token = localStorage.getItem("accessToken");
     }
