@@ -4,7 +4,10 @@ import Loader from "../../components/helpers/Loader/Loader";
 import { PostList } from "../../components/PostList";
 import { ProfileInfo } from "../../components/ProfileInfo";
 import { useCheckAuth } from "../../hooks/useCheckAuth";
-import { getProfileStart } from "../../state/profile/actions";
+import {
+  getProfilePostsStart,
+  getProfileStart,
+} from "../../state/profile/actions";
 import { ProfilePageContainer } from "./styled";
 
 export const UserPage = ({
@@ -12,7 +15,7 @@ export const UserPage = ({
     params: { username },
   },
 }) => {
-  useCheckAuth();
+  const user = useCheckAuth();
 
   const dispatch = useDispatch();
   const { profile, posts, isLoading, error } = useSelector(
@@ -23,11 +26,11 @@ export const UserPage = ({
 
   useEffect(() => {
     dispatch(getProfileStart(username));
-  }, [dispatch, username]);
+    dispatch(getProfilePostsStart(user));
+  }, [dispatch, username, user]);
 
   if (error) {
     console.log(error);
-    console.log(posts);
   }
 
   return isLoading || (!profile && !error) ? (
@@ -37,7 +40,7 @@ export const UserPage = ({
   ) : (
     <ProfilePageContainer>
       <ProfileInfo {...profile} isMe={isMe} />
-      <PostList posts={[]} />
+      <PostList posts={posts} />
     </ProfilePageContainer>
   );
 };

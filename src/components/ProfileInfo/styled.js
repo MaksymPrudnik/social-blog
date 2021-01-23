@@ -5,6 +5,7 @@ export const ProfileInfoContainer = styled.header`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-bottom: 2rem;
 `;
 
 export const ProfileImageContainer = styled.div`

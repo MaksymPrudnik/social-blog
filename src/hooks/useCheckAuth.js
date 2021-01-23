@@ -12,4 +12,6 @@ export const useCheckAuth = () => {
       history.push("/");
     }
   }, [username, history]);
+
+  return username;
 };

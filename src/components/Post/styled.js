@@ -33,6 +33,7 @@ export const AuthorImage = styled.img`
   height: 3rem;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 export const AuthorNickname = styled.div`
@@ -41,6 +42,7 @@ export const AuthorNickname = styled.div`
   text-align: left;
   padding-left: 1rem;
   align-self: center;
+  cursor: pointer;
 `;
 
 export const CreationDate = styled.div`

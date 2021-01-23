@@ -3,7 +3,8 @@ import { profileActionTypes } from "./types";
 const initialState = {
   profile: null,
   isLoading: false,
-  posts: null,
+  posts: [],
+  postComments: null,
   error: null,
 };
 
@@ -24,13 +25,12 @@ export const profileReducer = (state = initialState, action) => {
     case profileActionTypes.GET_PROFILE_POSTS_SUCCESS:
       return {
         ...state,
-        posts: action.payload,
+        ...action.payload,
       };
     case profileActionTypes.PROFILE_FAILURE:
       return {
         ...state,
         isLoading: false,
-        profile: null,
         error: action.payload,
       };
     default:

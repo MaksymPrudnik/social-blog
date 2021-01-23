@@ -42,23 +42,33 @@ export const Post = ({
 
   const creationTime = calculateCreationTime(createdAt);
 
-  const handlePostClick = ({ target }) => {
+  const handlePostClick = () => {
     if (isOptionsOpen) {
       setIsOptionsOpen(false);
     }
   };
 
-  const handleCommentsClick = ({ target }) => {
+  const handleCommentsClick = () => {
     if (!isLinkDisabled) {
       history.push(`/post/${id}`);
     }
   };
 
+  const handleAuthorClick = () => {
+    history.push(`/user/${authorData.username}`);
+  };
+
   return (
     <PostContainer onClick={handlePostClick}>
       <PostHeader>
-        <AuthorImage src={authorData.picture} alt="author picture" />
-        <AuthorNickname>@{authorData.username}</AuthorNickname>
+        <AuthorImage
+          src={authorData.picture}
+          alt="author picture"
+          onClick={handleAuthorClick}
+        />
+        <AuthorNickname onClick={handleAuthorClick}>
+          @{authorData.username}
+        </AuthorNickname>
         <CreationDate> - {creationTime}</CreationDate>
         <PostOptions onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
           <OptionDot />

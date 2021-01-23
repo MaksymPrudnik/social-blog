@@ -26,11 +26,17 @@ function* getProfilePostsAsync({ payload }) {
   try {
     const token = localStorage.getItem("accessToken");
     const requestParams = {
-      url: `/posts/${payload}`,
+      url: `/posts/feed/${payload}`,
       token,
     };
     const { rows } = yield makeGetRequest(requestParams);
-    yield put(getProfilePostsSuccess(rows));
+    const posts = [];
+    const postComments = {};
+    rows.forEach(({ id, comments, ...post }) => {
+      posts.push({ id, ...post });
+      postComments[id] = comments;
+    });
+    yield put(getProfilePostsSuccess(posts, postComments));
   } catch ({ message }) {
     yield put(profileFailure(message));
   }

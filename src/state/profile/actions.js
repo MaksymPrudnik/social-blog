@@ -10,9 +10,9 @@ export const getProfilePostsStart = (id) => ({
   payload: id,
 });
 
-export const getProfilePostsSuccess = (posts) => ({
+export const getProfilePostsSuccess = (posts, postComments) => ({
   type: profileActionTypes.GET_PROFILE_POSTS_SUCCESS,
-  payload: posts,
+  payload: { posts, postComments },
 });
 
 export const getProfileSuccess = (profile) => ({
