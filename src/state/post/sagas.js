@@ -101,14 +101,14 @@ function* updatePostAsync({ payload: { id, body } }) {
   }
 }
 
-function* likePostAsync({ payload }) {
+function* likePostAsync({ payload: { id, isCurrent } }) {
   try {
     const token = localStorage.getItem("accessToken");
     const { comments, ...post } = yield makePutRequest({
-      url: `posts/${payload}/like`,
+      url: `posts/${id}/like`,
       token,
     });
-    yield put(likePostSuccess(post));
+    yield put(likePostSuccess(post, isCurrent));
   } catch ({ message }) {
     yield put(postFailure(message));
   }

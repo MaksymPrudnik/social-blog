@@ -3,7 +3,7 @@ import { makePostRequest } from "../../services/axios";
 import { addCommentToList, commentFailure } from "./actions";
 import { commentActionTypes } from "./types";
 
-function* commentPostAsync({ payload }) {
+function* commentPostAsync({ payload: { isCurrent, ...payload } }) {
   try {
     const token = localStorage.getItem("accessToken");
     const { document, ...comment } = yield makePostRequest({
@@ -11,7 +11,7 @@ function* commentPostAsync({ payload }) {
       data: payload,
       token,
     });
-    yield put(addCommentToList(document, comment));
+    yield put(addCommentToList(document, comment, isCurrent));
   } catch ({ message }) {
     yield put(commentFailure(message || "Error commenting post"));
   }

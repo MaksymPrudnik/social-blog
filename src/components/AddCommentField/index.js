@@ -12,11 +12,17 @@ import {
 export const AddCommentField = ({ id }) => {
   const dispatch = useDispatch();
   const { picture } = useSelector((state) => state.auth);
+  const { currentPost } = useSelector(state => state.post)
+
+  let isCurrent = false;
+  if (currentPost?.id === id) {
+    isCurrent = true;
+  }
 
   const text = useFormInput();
 
   const handleSend = () => {
-    dispatch(commentPostStart(id, text.inputProps.value));
+    dispatch(commentPostStart(id, text.inputProps.value, isCurrent));
 
     text.clearValue();
   };

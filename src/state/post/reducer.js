@@ -1,4 +1,5 @@
 import { postActionTypes } from "./types";
+import { commentActionTypes } from "../comment/types";
 
 const initialState = {
   count: 0,
@@ -42,7 +43,7 @@ export const postsReducer = (state = initialState, action) => {
     case postActionTypes.GET_POST_SUCCESS:
       return {
         ...state,
-        currentPost: action.payload,
+        currentPost: { id: action.payload.id, ...action.payload.post },
       };
     case postActionTypes.DELETE_POST_FROM_LIST:
       return {
@@ -52,17 +53,35 @@ export const postsReducer = (state = initialState, action) => {
       };
     case postActionTypes.LIKE_POST_SUCCESS:
     case postActionTypes.UPDATE_POST_SUCCESS:
+      const { isCurrent, post } = action.payload;
+      if (isCurrent) {
+        return {
+          ...state,
+          currentPost: post,
+        };
+      }
       return {
         ...state,
-        rows: state.rows.map((post) =>
-          post.id === action.payload.id ? action.payload : post
-        ),
+        rows: state.rows.map((item) => (item.id === post.id ? post : item)),
       };
     case postActionTypes.POST_FAILURE:
       return {
         ...state,
         error: action.payload,
         isLoading: false,
+      };
+    case commentActionTypes.ADD_COMMENT_TO_LIST:
+      if (action.payload.isCurrent) {
+        return {
+          ...state,
+          currentPost: {
+            ...state.currentPost,
+            commentsCount: state.currentPost.commentsCount + 1,
+          },
+        };
+      }
+      return {
+        ...state,
       };
     default:
       return state;

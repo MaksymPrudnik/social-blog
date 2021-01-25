@@ -50,17 +50,17 @@ export const updatePostStart = (post) => ({
 
 export const updatePostSuccess = (post) => ({
   type: postActionTypes.UPDATE_POST_SUCCESS,
-  payload: post,
+  payload: { post },
 });
 
-export const likePostStart = (id) => ({
+export const likePostStart = (id, isCurrent) => ({
   type: postActionTypes.LIKE_POST_START,
-  payload: id,
+  payload: { id, isCurrent },
 });
 
-export const likePostSuccess = (post) => ({
+export const likePostSuccess = (post, isCurrent = false) => ({
   type: postActionTypes.LIKE_POST_SUCCESS,
-  payload: post,
+  payload: { post, isCurrent },
 });
 
 export const deletePostStart = (id) => ({
