@@ -20,6 +20,10 @@ export const getProfileSuccess = (profile) => ({
   payload: profile,
 });
 
+export const clearProfileData = () => ({
+  type: profileActionTypes.CLEAR_PROFILE_DATA,
+});
+
 export const profileFailure = (message) => ({
   type: profileActionTypes.PROFILE_FAILURE,
   payload: message,

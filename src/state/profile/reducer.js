@@ -34,6 +34,11 @@ export const profileReducer = (state = initialState, action) => {
         ...action.payload,
         isPostsLoading: false,
       };
+    case profileActionTypes.CLEAR_PROFILE_DATA:
+      return {
+        ...state,
+        ...initialState,
+      };
     case profileActionTypes.PROFILE_FAILURE:
       return {
         ...state,

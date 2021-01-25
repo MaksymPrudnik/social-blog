@@ -1,7 +1,10 @@
 import {
   DateContainer,
   EmailContainer,
+  FriendsCountContainer,
+  FriendshipButton,
   InfoInNumbersContainer,
+  PostCountContainer,
   ProfileImage,
   ProfileImageContainer,
   ProfileInfoContainer,
@@ -16,17 +19,41 @@ export const ProfileInfo = ({
   friends,
   createdAt,
   postCount,
-}) => (
-  <ProfileInfoContainer>
-    <ProfileImageContainer wallpapper={wallpapper}>
-      <ProfileImage src={picture} alt="" />
-    </ProfileImageContainer>
-    <UsernameContainer>@{username}</UsernameContainer>
-    <EmailContainer>{email ? email : null}</EmailContainer>
-    <DateContainer>Member since {createdAt.split("T")[0]}</DateContainer>
-    <InfoInNumbersContainer>
-      <div>{`${postCount} Post${postCount > 1 ? "s" : ""}`}</div>
-      <div>{`${friends.length} Friend${friends.length !== 1 ? "s" : ""}`}</div>
-    </InfoInNumbersContainer>
-  </ProfileInfoContainer>
-);
+  isMe,
+  relationship,
+}) => {
+  const friendshipData = {
+    message: "Loading",
+  };
+  if (!isMe) {
+    switch (relationship) {
+      case null:
+        friendshipData.message = "Add friend";
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <ProfileInfoContainer>
+      <ProfileImageContainer wallpapper={wallpapper}>
+        <ProfileImage src={picture} alt="" />
+      </ProfileImageContainer>
+      {!isMe ? (
+        <FriendshipButton>{friendshipData.message}</FriendshipButton>
+      ) : null}
+      <UsernameContainer>@{username}</UsernameContainer>
+      <EmailContainer>{email ? email : null}</EmailContainer>
+      <DateContainer>Member since {createdAt.split("T")[0]}</DateContainer>
+      <InfoInNumbersContainer>
+        <PostCountContainer>{`${postCount} Post${
+          postCount > 1 ? "s" : ""
+        }`}</PostCountContainer>
+        <FriendsCountContainer>{`${friends.length} Friend${
+          friends.length !== 1 ? "s" : ""
+        }`}</FriendsCountContainer>
+      </InfoInNumbersContainer>
+    </ProfileInfoContainer>
+  );
+};

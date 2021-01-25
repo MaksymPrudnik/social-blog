@@ -28,11 +28,22 @@ export const ProfileImage = styled.img`
   left: 2rem;
 `;
 
-export const UsernameContainer = styled.div`
+export const FriendshipButton = styled.button`
+  margin: 1.5rem 1rem 0 0;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid black;
+  border-radius: 0.7rem;
+  background-color: transparent;
   align-self: flex-end;
+  font-size: 1.2rem;
+  cursor: pointer;
+`;
+
+export const UsernameContainer = styled.div`
+  align-self: flex-start;
   font-size: 1.5rem;
   font-weight: 500;
-  padding: 1.5rem;
+  padding: 1.2rem 1.5rem;
 `;
 
 export const EmailContainer = styled.div`

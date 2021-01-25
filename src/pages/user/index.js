@@ -5,6 +5,7 @@ import { PostList } from "../../components/PostList";
 import { ProfileInfo } from "../../components/ProfileInfo";
 import { useCheckAuth } from "../../hooks/useCheckAuth";
 import {
+  clearProfileData,
   getProfilePostsStart,
   getProfileStart,
 } from "../../state/profile/actions";
@@ -26,22 +27,20 @@ export const UserPage = ({
     error,
   } = useSelector((state) => state.profile);
 
-  const requestUsername = profile?.isMe ? "me" : username;
   useEffect(() => {
     if (!profile && !isProfileLoading) {
-      dispatch(getProfileStart(requestUsername));
+      dispatch(getProfileStart(username));
     }
     if (!posts && !isPostsLoading) {
-      dispatch(getProfilePostsStart(requestUsername));
+      dispatch(getProfilePostsStart(username));
     }
-  }, [
-    dispatch,
-    requestUsername,
-    profile,
-    posts,
-    isProfileLoading,
-    isPostsLoading,
-  ]);
+  }, [dispatch, username, profile, posts, isProfileLoading, isPostsLoading]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearProfileData());
+    };
+  }, [dispatch]);
 
   if (error) {
     console.log(error);

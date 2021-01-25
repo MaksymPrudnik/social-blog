@@ -64,7 +64,7 @@ export const Header = () => {
           <NavImage
             src={picture}
             alt="profile image link"
-            onClick={() => history.push(`/user/${username}`)}
+            onClick={() => history.push(`/user/me`)}
           />
         ) : null}
       </UserNavContainer>
