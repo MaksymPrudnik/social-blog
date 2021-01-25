@@ -20,6 +20,11 @@ export const getProfileSuccess = (profile) => ({
   payload: profile,
 });
 
+export const sendFriendRequestStart = (id) => ({
+  type: profileActionTypes.SEND_FRIEND_REQUEST_START,
+  payload: id,
+});
+
 export const clearProfileData = () => ({
   type: profileActionTypes.CLEAR_PROFILE_DATA,
 });

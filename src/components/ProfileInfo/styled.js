@@ -6,6 +6,10 @@ export const ProfileInfoContainer = styled.header`
   display: flex;
   flex-direction: column;
   padding-bottom: 2rem;
+
+  @media screen and (max-width: 600px) {
+    padding-bottom: 1rem;
+  }
 `;
 
 export const ProfileImageContainer = styled.div`
@@ -18,7 +22,7 @@ export const ProfileImageContainer = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  max-width: 20vh;
+  width: 20vh;
   height: 20vh;
   object-fit: cover;
   border-radius: 50%;
@@ -26,24 +30,23 @@ export const ProfileImage = styled.img`
   position: absolute;
   top: 12vh;
   left: 2rem;
-`;
 
-export const FriendshipButton = styled.button`
-  margin: 1.5rem 1rem 0 0;
-  padding: 0.2rem 0.5rem;
-  border: 1px solid black;
-  border-radius: 0.7rem;
-  background-color: transparent;
-  align-self: flex-end;
-  font-size: 1.2rem;
-  cursor: pointer;
+  @media screen and (max-width: 600px) {
+    width: 15vh;
+    height: 15vh;
+  }
 `;
 
 export const UsernameContainer = styled.div`
-  align-self: flex-start;
+  align-self: flex-end;
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 550;
   padding: 1.2rem 1.5rem;
+
+  @media screen and (max-width: 600px) {
+    font-size: 1.2rem;
+    padding: 1rem 1.5rem;
+  }
 `;
 
 export const EmailContainer = styled.div`

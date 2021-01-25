@@ -11,7 +11,11 @@ import {
   getFeedStart,
   getPostStart,
 } from "./post/sagas";
-import { getProfilePostsStart, getProfileStart } from "./profile/sagas";
+import {
+  getProfilePosts,
+  getProfile,
+  sendFriendRequest,
+} from "./profile/sagas";
 
 export function* rootSaga() {
   yield all([
@@ -19,12 +23,13 @@ export function* rootSaga() {
     call(registerStart),
     call(getMeStart),
     call(logout),
-    call(getProfileStart),
+    call(getProfile),
+    call(getProfilePosts),
+    call(sendFriendRequest),
     call(getPostsListStart),
     call(getFeedStart),
     call(getPostStart),
     call(createPostStart),
-    call(getProfilePostsStart),
     call(updatePostStart),
     call(likePostStart),
     call(deletePostStart),

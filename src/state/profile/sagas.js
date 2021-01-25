@@ -1,5 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { makeGetRequest } from "../../services/axios";
+import { makeGetRequest, makePostRequest } from "../../services/axios";
 
 import { profileActionTypes } from "./types";
 
@@ -7,6 +7,7 @@ import {
   profileFailure,
   getProfileSuccess,
   getProfilePostsSuccess,
+  getProfileStart,
 } from "./actions";
 
 function* getProfileAsync({ payload }) {
@@ -46,13 +47,37 @@ function* getProfilePostsAsync({ payload }) {
   }
 }
 
-export function* getProfileStart() {
+function* sendFriendRequestAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const requestParams = {
+      url: `/friend-requests/${payload}`,
+      token,
+    };
+    const { receiverUsername, ...friendRequest } = yield makePostRequest(
+      requestParams
+    );
+    console.log(friendRequest);
+    yield put(getProfileStart(receiverUsername));
+  } catch ({ message }) {
+    yield put(profileFailure(message));
+  }
+}
+
+export function* getProfile() {
   yield takeLatest(profileActionTypes.GET_PROFILE_START, getProfileAsync);
 }
 
-export function* getProfilePostsStart() {
+export function* getProfilePosts() {
   yield takeLatest(
     profileActionTypes.GET_PROFILE_POSTS_START,
     getProfilePostsAsync
+  );
+}
+
+export function* sendFriendRequest() {
+  yield takeLatest(
+    profileActionTypes.SEND_FRIEND_REQUEST_START,
+    sendFriendRequestAsync
   );
 }

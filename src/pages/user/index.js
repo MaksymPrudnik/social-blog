@@ -28,22 +28,17 @@ export const UserPage = ({
   } = useSelector((state) => state.profile);
 
   useEffect(() => {
-    if (!profile && !isProfileLoading) {
-      dispatch(getProfileStart(username));
-    }
-    if (!posts && !isPostsLoading) {
-      dispatch(getProfilePostsStart(username));
-    }
-  }, [dispatch, username, profile, posts, isProfileLoading, isPostsLoading]);
+    dispatch(getProfileStart(username));
+    dispatch(getProfilePostsStart(username));
 
-  useEffect(() => {
     return () => {
       dispatch(clearProfileData());
     };
-  }, [dispatch]);
+  }, [dispatch, username]);
 
   if (error) {
     console.log(error);
+    console.log(isPostsLoading);
   }
 
   return isProfileLoading || (!profile && !error) ? (
