@@ -1,5 +1,5 @@
 import { Post } from "../Post";
-import { PostListContainer } from "./styled";
+import { NoPostsMessage, PostListContainer } from "./styled";
 
 export const PostList = ({ posts }) =>
   posts?.length ? (
@@ -9,5 +9,5 @@ export const PostList = ({ posts }) =>
       ))}
     </PostListContainer>
   ) : (
-    "There're no posts yet!"
+    <NoPostsMessage>There're no posts yet!</NoPostsMessage>
   );

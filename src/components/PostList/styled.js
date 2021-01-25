@@ -5,3 +5,5 @@ export const PostListContainer = styled.div`
   border: 0.5px solid lightgray;
   margin: 0 auto;
 `;
+
+export const NoPostsMessage = styled.div``;

@@ -15,30 +15,45 @@ export const UserPage = ({
     params: { username },
   },
 }) => {
-  const user = useCheckAuth();
+  useCheckAuth();
 
   const dispatch = useDispatch();
-  const { profile, posts, isLoading, error } = useSelector(
-    (state) => state.profile
-  );
+  const {
+    profile,
+    posts,
+    isProfileLoading,
+    isPostsLoading,
+    error,
+  } = useSelector((state) => state.profile);
 
-  const profileUsername = profile?.isMe ? "me" : username;
+  const requestUsername = profile?.isMe ? "me" : username;
   useEffect(() => {
-    dispatch(getProfileStart(profileUsername));
-    dispatch(getProfilePostsStart(user));
-  }, [dispatch, user, profileUsername]);
+    if (!profile && !isProfileLoading) {
+      dispatch(getProfileStart(requestUsername));
+    }
+    if (!posts && !isPostsLoading) {
+      dispatch(getProfilePostsStart(requestUsername));
+    }
+  }, [
+    dispatch,
+    requestUsername,
+    profile,
+    posts,
+    isProfileLoading,
+    isPostsLoading,
+  ]);
 
   if (error) {
     console.log(error);
   }
 
-  return isLoading || (!profile && !error) ? (
+  return isProfileLoading || (!profile && !error) ? (
     <div>
       <Loader size="3rem" />
     </div>
   ) : (
     <ProfilePageContainer>
-      <ProfileInfo {...profile} isMe={profile.isMe} postCount={posts.length} />
+      <ProfileInfo {...profile} isMe={profile.isMe} postCount={posts?.length} />
       <PostList posts={posts} />
     </ProfilePageContainer>
   );
