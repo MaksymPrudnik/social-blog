@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const FriendshipButton = styled.button`
+  min-width: 8rem;
   margin: 1.5rem 1.5rem 0 0;
   padding: 0.2rem 0.5rem;
   border: 1px solid ${({ color }) => color};

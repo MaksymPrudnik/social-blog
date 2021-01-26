@@ -1,6 +1,6 @@
 import { all, call } from "redux-saga/effects";
 
-import { getMeStart, loginStart, registerStart, logout } from "./auth/sagas";
+import { getMe, login, register, logout } from "./auth/sagas";
 import { commentPostStart } from "./comment/sagas";
 import {
   getPostsListStart,
@@ -19,9 +19,9 @@ import {
 
 export function* rootSaga() {
   yield all([
-    call(loginStart),
-    call(registerStart),
-    call(getMeStart),
+    call(login),
+    call(register),
+    call(getMe),
     call(logout),
     call(getProfile),
     call(getProfilePosts),

@@ -38,6 +38,8 @@ export const CreatePostModal = ({ isOpen }) => {
         text: text.inputProps.value,
       })
     );
+    title.clearValue();
+    text.clearValue();
     handleClose();
   };
 

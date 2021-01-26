@@ -61,15 +61,15 @@ function* logoutAsync() {
   }
 }
 
-export function* loginStart() {
+export function* login() {
   yield takeLatest(authActionTypes.LOGIN_START, loginAsync);
 }
 
-export function* registerStart() {
+export function* register() {
   yield takeLatest(authActionTypes.REGISTER_START, registerAsync);
 }
 
-export function* getMeStart() {
+export function* getMe() {
   yield takeLatest(authActionTypes.GET_ME_START, getMeAsync);
 }
 
