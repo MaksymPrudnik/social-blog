@@ -20,46 +20,47 @@ export const makeGetRequest = ({ url, token }) => {
     });
 };
 
-export const makePostRequest = ({ url, data, token }) => {
+export const makePostRequest = ({ url, data }) => {
+  const token = localStorage.getItem("accessToken");
   const options = {
     url,
     method: "POST",
     data,
+    headers: { Authorization: `Bearer ${token}` },
   };
-  if (token) {
-    options.headers = { Authorization: `Bearer ${token}` };
-  }
   return instance(options)
-    .then(({ data, status }) => ([200, 201].includes(status) ? data : null))
+    .then(({ data, status }) =>
+      [200, 201].includes(status) ? data || true : null
+    )
     .catch(({ message }) => {
       throw new Error(message);
     });
 };
 
-export const makePutRequest = ({ url, data, token }) => {
+export const makePutRequest = ({ url, data }) => {
+  const token = localStorage.getItem("accessToken");
   const options = {
     url,
     method: "PUT",
     data,
+    headers: { Authorization: `Bearer ${token}` },
   };
-  if (token) {
-    options.headers = { Authorization: `Bearer ${token}` };
-  }
   return instance(options)
-    .then(({ data, status }) => ([200, 201].includes(status) ? data : null))
+    .then(({ data, status }) =>
+      [200, 201].includes(status) ? data || true : null
+    )
     .catch(({ message }) => {
       throw new Error(message);
     });
 };
 
-export const makeDeleteRequest = ({ url, token }) => {
+export const makeDeleteRequest = ({ url }) => {
+  const token = localStorage.getItem("accessToken");
   const options = {
     url,
     method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
   };
-  if (token) {
-    options.headers = { Authorization: `Bearer ${token}` };
-  }
   return instance(options)
     .then(({ status }) => (status === 204 ? true : null))
     .catch(({ message }) => {

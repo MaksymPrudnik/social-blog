@@ -22,12 +22,19 @@ export const ProfileInfo = ({
   postCount,
   isMe,
   relationship,
+  requestId,
 }) => (
   <ProfileInfoContainer>
     <ProfileImageContainer wallpapper={wallpapper}>
       <ProfileImage src={picture} alt="" />
     </ProfileImageContainer>
-    {!isMe ? <FriendActionsButton relationship={relationship} id={id} /> : null}
+    <FriendActionsButton
+      isMe={isMe}
+      relationship={relationship}
+      id={id}
+      username={username}
+      requestId={requestId}
+    />
     <UsernameContainer>@{username}</UsernameContainer>
     <EmailContainer>{email ? email : null}</EmailContainer>
     <DateContainer>Member since {createdAt.split("T")[0]}</DateContainer>

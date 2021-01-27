@@ -15,6 +15,9 @@ import {
   getProfilePosts,
   getProfile,
   sendFriendRequest,
+  cancelFriendRequest,
+  acceptFriendRequest,
+  removeFriend,
 } from "./profile/sagas";
 
 export function* rootSaga() {
@@ -26,6 +29,9 @@ export function* rootSaga() {
     call(getProfile),
     call(getProfilePosts),
     call(sendFriendRequest),
+    call(cancelFriendRequest),
+    call(acceptFriendRequest),
+    call(removeFriend),
     call(getPostsListStart),
     call(getFeedStart),
     call(getPostStart),

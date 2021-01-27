@@ -1,5 +1,10 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { makeGetRequest, makePostRequest } from "../../services/axios";
+import {
+  makeDeleteRequest,
+  makeGetRequest,
+  makePostRequest,
+  makePutRequest,
+} from "../../services/axios";
 
 import { profileActionTypes } from "./types";
 
@@ -47,18 +52,61 @@ function* getProfilePostsAsync({ payload }) {
   }
 }
 
-function* sendFriendRequestAsync({ payload }) {
+function* sendFriendRequestAsync({ payload: { id, username } }) {
   try {
-    const token = localStorage.getItem("accessToken");
     const requestParams = {
-      url: `/friend-requests/${payload}`,
-      token,
+      url: `/friend-requests/${id}`,
     };
-    const { receiverUsername, ...friendRequest } = yield makePostRequest(
-      requestParams
-    );
-    console.log(friendRequest);
-    yield put(getProfileStart(receiverUsername));
+    const isSuccessful = yield makePostRequest(requestParams);
+    if (!isSuccessful) {
+      throw new Error("Error sending friend request");
+    }
+    yield put(getProfileStart(username));
+  } catch ({ message }) {
+    yield put(profileFailure(message));
+  }
+}
+
+function* cancelFriendRequestAsync({ payload: { id, username } }) {
+  try {
+    const requestParams = {
+      url: `/friend-requests/${id}`,
+    };
+    const isDeleted = yield makeDeleteRequest(requestParams);
+    if (!isDeleted) {
+      throw new Error("Error deleting friend request");
+    }
+    yield put(getProfileStart(username));
+  } catch ({ message }) {
+    yield put(profileFailure(message));
+  }
+}
+
+function* acceptFriendRequestAsync({ payload: { id, username } }) {
+  try {
+    const requestParams = {
+      url: `/users/add-friend/${id}`,
+    };
+    const isSuccessful = yield makePutRequest(requestParams);
+    if (!isSuccessful) {
+      throw new Error("Error adding friend");
+    }
+    yield put(getProfileStart(username));
+  } catch ({ message }) {
+    yield put(profileFailure(message));
+  }
+}
+
+function* removeFriendAsync({ payload: { id, username } }) {
+  try {
+    const requestParams = {
+      url: `/users/remove-friend/${id}`,
+    };
+    const isSuccessful = yield makePutRequest(requestParams);
+    if (!isSuccessful) {
+      throw new Error("Error removing friend");
+    }
+    yield put(getProfileStart(username));
   } catch ({ message }) {
     yield put(profileFailure(message));
   }
@@ -80,4 +128,22 @@ export function* sendFriendRequest() {
     profileActionTypes.SEND_FRIEND_REQUEST_START,
     sendFriendRequestAsync
   );
+}
+
+export function* cancelFriendRequest() {
+  yield takeLatest(
+    profileActionTypes.CANCEL_FRIEND_REQUEST_START,
+    cancelFriendRequestAsync
+  );
+}
+
+export function* acceptFriendRequest() {
+  yield takeLatest(
+    profileActionTypes.ACCEPT_FRIEND_REQUEST_START,
+    acceptFriendRequestAsync
+  );
+}
+
+export function* removeFriend() {
+  yield takeLatest(profileActionTypes.REMOVE_FRIEND_START, removeFriendAsync);
 }

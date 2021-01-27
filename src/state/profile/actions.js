@@ -20,9 +20,24 @@ export const getProfileSuccess = (profile) => ({
   payload: profile,
 });
 
-export const sendFriendRequestStart = (id) => ({
+export const sendFriendRequestStart = (id, username) => ({
   type: profileActionTypes.SEND_FRIEND_REQUEST_START,
-  payload: id,
+  payload: { id, username },
+});
+
+export const cancelFriendRequestStart = (id, username) => ({
+  type: profileActionTypes.CANCEL_FRIEND_REQUEST_START,
+  payload: { id, username },
+});
+
+export const acceptFriendRequestStart = (id, username) => ({
+  type: profileActionTypes.ACCEPT_FRIEND_REQUEST_START,
+  payload: { id, username },
+});
+
+export const removeFriendStart = (id, username) => ({
+  type: profileActionTypes.REMOVE_FRIEND_START,
+  payload: { id, username },
 });
 
 export const clearProfileData = () => ({

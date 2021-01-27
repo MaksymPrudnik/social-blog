@@ -1,9 +1,20 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { sendFriendRequestStart } from "../../state/profile/actions";
+import {
+  acceptFriendRequestStart,
+  cancelFriendRequestStart,
+  removeFriendStart,
+  sendFriendRequestStart,
+} from "../../state/profile/actions";
 import { FriendshipButton } from "./styled";
 
-export const FriendActionsButton = ({ relationship, id }) => {
+export const FriendActionsButton = ({
+  isMe,
+  relationship,
+  id,
+  username,
+  requestId,
+}) => {
   const dispatch = useDispatch();
   const [isHover, setIsHover] = useState();
 
@@ -22,19 +33,26 @@ export const FriendActionsButton = ({ relationship, id }) => {
       cssProps.backgroundColor = "transparent";
       cssProps.color = "black";
       cssProps.hoverColor = "#5f4f7f";
-      action = () => dispatch(sendFriendRequestStart(id));
+      action = () => dispatch(sendFriendRequestStart(id, username));
       break;
     case "friends":
       text.normal = "Friend";
-      cssProps.backgroundColor = "transparent";
+      text.hover = "Remove";
+      cssProps.backgroundColor = "#8f83";
       cssProps.color = "black";
-      cssProps.hoverColor = "#113";
+      cssProps.hoverColor = "white";
+      cssProps.hoverBackgroundColor = "darkred";
+      action = () => dispatch(removeFriendStart(id, username));
       break;
     case "requested":
       text.normal = "Received";
+      text.hover = "Accept";
       cssProps.backgroundColor = "transparent";
       cssProps.color = "black";
       cssProps.hoverColor = "#113";
+      cssProps.hoverColor = "white";
+      cssProps.hoverBackgroundColor = "darkgreen";
+      action = () => dispatch(acceptFriendRequestStart(id, username));
       break;
     case "received":
       text.normal = "Requested";
@@ -43,12 +61,13 @@ export const FriendActionsButton = ({ relationship, id }) => {
       cssProps.color = "blue";
       cssProps.hoverColor = "white";
       cssProps.hoverBackgroundColor = "darkred";
+      action = () => dispatch(cancelFriendRequestStart(requestId, username));
       break;
     default:
       break;
   }
 
-  return (
+  return !isMe ? (
     <FriendshipButton
       {...cssProps}
       onMouseOver={() => setIsHover(true)}
@@ -57,5 +76,5 @@ export const FriendActionsButton = ({ relationship, id }) => {
     >
       {isHover && text.hover ? text.hover : text.normal}
     </FriendshipButton>
-  );
+  ) : null;
 };
