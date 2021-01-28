@@ -13,6 +13,7 @@ import {
   getProfileSuccess,
   getProfilePostsSuccess,
   getProfileStart,
+  getFriendListSuccess,
 } from "./actions";
 
 function* getProfileAsync({ payload }) {
@@ -112,6 +113,20 @@ function* removeFriendAsync({ payload: { id, username } }) {
   }
 }
 
+function* getFriendListAsync({ payload }) {
+  try {
+    const token = localStorage.getItem("accessToken");
+    const requestParams = {
+      url: `/users/${payload}/friends`,
+      token,
+    };
+    const { ids, rows } = yield makeGetRequest(requestParams);
+    yield put(getFriendListSuccess(ids, rows));
+  } catch ({ message }) {
+    yield put(profileFailure(message));
+  }
+}
+
 export function* getProfile() {
   yield takeLatest(profileActionTypes.GET_PROFILE_START, getProfileAsync);
 }
@@ -146,4 +161,11 @@ export function* acceptFriendRequest() {
 
 export function* removeFriend() {
   yield takeLatest(profileActionTypes.REMOVE_FRIEND_START, removeFriendAsync);
+}
+
+export function* getFriendList() {
+  yield takeLatest(
+    profileActionTypes.GET_FRIEND_LIST_START,
+    getFriendListAsync
+  );
 }

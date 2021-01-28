@@ -40,6 +40,16 @@ export const removeFriendStart = (id, username) => ({
   payload: { id, username },
 });
 
+export const getFriendListStart = (username) => ({
+  type: profileActionTypes.GET_FRIEND_LIST_START,
+  payload: username,
+});
+
+export const getFriendListSuccess = (ids, rows) => ({
+  type: profileActionTypes.GET_FRIEND_LIST_SUCCESS,
+  payload: { ids, rows },
+});
+
 export const clearProfileData = () => ({
   type: profileActionTypes.CLEAR_PROFILE_DATA,
 });

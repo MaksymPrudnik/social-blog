@@ -34,6 +34,11 @@ export const postsReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case postActionTypes.ADD_POST_TO_LIST:
+      if (!Array.isArray(state.rows)) {
+        return {
+          ...state,
+        };
+      }
       return {
         ...state,
         count: state.count + 1,
@@ -60,9 +65,14 @@ export const postsReducer = (state = initialState, action) => {
           currentPost: post,
         };
       }
+      if (Array.isArray(state.rows)) {
+        return {
+          ...state,
+          rows: state.rows.map((item) => (item.id === post.id ? post : item)),
+        };
+      }
       return {
         ...state,
-        rows: state.rows.map((item) => (item.id === post.id ? post : item)),
       };
     case postActionTypes.POST_FAILURE:
       return {
