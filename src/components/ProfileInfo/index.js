@@ -17,7 +17,7 @@ export const ProfileInfo = ({
   username,
   email,
   picture,
-  wallpapper,
+  wallpaper,
   friends,
   createdAt,
   postCount,
@@ -26,7 +26,7 @@ export const ProfileInfo = ({
   requestId,
 }) => (
   <ProfileInfoContainer>
-    <ProfileImageContainer wallpapper={wallpapper}>
+    <ProfileImageContainer wallpaper={wallpaper}>
       <ProfileImage src={picture} alt="" />
     </ProfileImageContainer>
     <FriendActionsButton

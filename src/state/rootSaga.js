@@ -20,6 +20,7 @@ import {
   removeFriend,
   getFriendList,
 } from "./profile/sagas";
+import { getProfileSettings, updateProfile } from "./settings/sagas";
 
 export function* rootSaga() {
   yield all([
@@ -29,6 +30,8 @@ export function* rootSaga() {
     call(logout),
     call(getProfile),
     call(getProfilePosts),
+    call(getProfileSettings),
+    call(updateProfile),
     call(sendFriendRequest),
     call(cancelFriendRequest),
     call(acceptFriendRequest),

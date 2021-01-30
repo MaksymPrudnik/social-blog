@@ -13,7 +13,6 @@ export const FriendsList = () => {
     isFriendsLoading,
     friends,
   } = useSelector((state) => state.profile);
-  console.log(username);
 
   useEffect(() => {
     dispatch(getFriendListStart(username));

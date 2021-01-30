@@ -14,6 +14,7 @@ import { Header } from "./components/Header";
 import { getMeStart, unsetLoading } from "./state/auth/actions";
 import { SplashScreen } from "./components/SplashScreen";
 import { PostPage } from "./pages/post";
+import { SettingsPage } from "./pages/settings";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ const App = () => {
             render={() => <CreatePostModal isOpen={true} />}
           />
           <Route path="/user/:username" component={UserPage} />
+          <Route path="/settings" component={SettingsPage} />
           <Route path="/post/:id" component={PostPage} />
         </Switch>
       </Router>

@@ -17,7 +17,7 @@ export const ProfileImageContainer = styled.div`
   position: relative;
   display: flex;
   background-color: lightcoral;
-  background: url(${({ wallpapper }) => wallpapper});
+  background: url(${({ wallpaper }) => wallpaper});
   background-size: "cover";
 `;
 
