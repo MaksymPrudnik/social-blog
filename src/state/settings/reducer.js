@@ -4,6 +4,9 @@ const initialState = {
   user: null,
   isLoading: false,
   error: null,
+  friends: null,
+  madeRequests: null,
+  receivedRequests: null,
 };
 
 export const settingsReducer = (state = initialState, action) => {
@@ -18,6 +21,21 @@ export const settingsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         user: action.payload,
+      };
+    case settingsActionTypes.GET_FRIENDS_SUCCESS:
+      return {
+        ...state,
+        friends: action.payload.rows,
+      };
+    case settingsActionTypes.GET_MADE_REQUESTS_SUCCESS:
+      return {
+        ...state,
+        madeRequests: action.payload.rows,
+      };
+    case settingsActionTypes.GET_RECEIVED_REQUESTS_SUCCESS:
+      return {
+        ...state,
+        receivedRequests: action.payload.rows,
       };
     case settingsActionTypes.SETTINGS_ERROR:
       return {

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { getFriendListStart } from "../../state/profile/actions";
 import { FriendPicture, FriendsListContainer } from "./styled";
 
-export const FriendsList = () => {
+export const ProfileFriendsList = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 

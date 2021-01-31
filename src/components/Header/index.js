@@ -6,6 +6,7 @@ import { openCreatePostModal } from "../../state/post-modal/actions";
 import { CreatePostModal } from "../CreatePostModal";
 
 import { AiOutlineLogout, AiFillEdit } from "react-icons/ai";
+import { FiSettings } from "react-icons/fi";
 
 import {
   HeaderContainer,
@@ -16,6 +17,7 @@ import {
   LogoutButton,
   NavImage,
   NewPostButton,
+  SettingsButton,
 } from "./styled";
 
 export const Header = () => {
@@ -66,6 +68,11 @@ export const Header = () => {
             alt="profile image link"
             onClick={() => history.push(`/user/me`)}
           />
+        ) : null}
+        {pathname.includes("/user/me") ? (
+          <SettingsButton onClick={() => history.push(`/settings`)}>
+            <FiSettings />
+          </SettingsButton>
         ) : null}
       </UserNavContainer>
     </HeaderContainer>

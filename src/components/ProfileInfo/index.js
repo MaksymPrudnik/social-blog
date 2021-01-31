@@ -1,5 +1,5 @@
 import { FriendActionsButton } from "../FriendActionsButton";
-import { FriendsList } from "../FriendsList";
+import { ProfileFriendsList } from "../ProfileFriendsList";
 import {
   DateContainer,
   EmailContainer,
@@ -47,6 +47,6 @@ export const ProfileInfo = ({
         friends.length !== 1 ? "s" : ""
       }`}</FriendsCountContainer>
     </InfoInNumbersContainer>
-    <FriendsList />
+    <ProfileFriendsList />
   </ProfileInfoContainer>
 );

@@ -5,13 +5,13 @@ import { getPicture, uploadPicture } from "../../services/firebase";
 import { updateProfileStart } from "../../state/settings/actions";
 import { FormInput } from "../FormInput";
 import {
-  Header,
   PicturesContainer,
   ProfilePicture,
   UploadPictureContainer,
   ProfileSettingsContainer,
   TextContainer,
   WallpaperPicture,
+  SaveButton,
 } from "./styled";
 
 export const ProfileSettings = ({ user }) => {
@@ -82,7 +82,6 @@ export const ProfileSettings = ({ user }) => {
 
   return (
     <ProfileSettingsContainer>
-      <Header>Profile</Header>
       <PicturesContainer>
         <UploadPictureContainer>
           <ProfilePicture src={picture} alt="" />
@@ -115,7 +114,7 @@ export const ProfileSettings = ({ user }) => {
           {...email.inputProps}
         />
       </TextContainer>
-      <button onClick={handleSave}>Save</button>
+      <SaveButton onClick={handleSave}>Save</SaveButton>
     </ProfileSettingsContainer>
   );
 };

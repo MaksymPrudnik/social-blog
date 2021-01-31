@@ -64,3 +64,14 @@ export const NewPostButton = styled(LogoutButton)`
     outline: none;
   }
 `;
+
+export const SettingsButton = styled.button`
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`;
